@@ -1,0 +1,15 @@
+node_modules/
+.env
+.env.local
+dist/
+build/
+*.log
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+smartmoney/backend/node_modules/
+smartmoney/frontend/node_modules/
+smartmoney/frontend/dist/
+smartmoney/android/

@@ -1,0 +1,17 @@
+{
+  "name": "smartmoney-backend",
+  "version": "1.0.0",
+  "description": "Smart Money Screener Backend",
+  "main": "server.js",  "engines": {
+    "node": "18.x"
+  },  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "axios": "^1.7.2",
+    "node-cron": "^3.0.3"
+  }
+}

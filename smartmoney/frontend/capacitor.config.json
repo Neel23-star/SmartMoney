@@ -1,0 +1,11 @@
+{
+  "appId": "com.smartmoney.screener",
+  "appName": "Smart Money Screener",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}

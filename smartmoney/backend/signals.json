@@ -1,0 +1,311 @@
+[
+  {
+    "symbol": "TITAN",
+    "asset_type": "Stock",
+    "score": 42.7,
+    "reasons": [
+      "🔥 Live Vol 5.27x avg"
+    ],
+    "price": 4509,
+    "volume_spike": 5.27,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/TITAN.NS",
+    "signal_reason": "🔥 Live Vol 5.27x avg",
+    "sectors": [
+      "Consumer",
+      "Nifty50",
+      "Nifty100",
+      "Evergreen"
+    ],
+    "explanation": "Volume is 5.27x normal — unusually heavy buying activity. 🔥 Very high conviction signal."
+  },
+  {
+    "symbol": "SBIN",
+    "asset_type": "Stock",
+    "score": 27.6,
+    "reasons": [
+      "🔥 Live Vol 3.76x avg"
+    ],
+    "price": 1019.3,
+    "volume_spike": 3.76,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/SBIN.NS",
+    "signal_reason": "🔥 Live Vol 3.76x avg",
+    "sectors": [
+      "PSU Banks",
+      "Nifty50",
+      "Nifty100"
+    ],
+    "explanation": "Volume is 3.76x normal — unusually heavy buying activity. ⭐ Medium-high conviction signal."
+  },
+  {
+    "symbol": "ASIANPAINT",
+    "asset_type": "Stock",
+    "score": 21.4,
+    "reasons": [
+      "🔥 Live Vol 3.14x avg"
+    ],
+    "price": 2599.9,
+    "volume_spike": 3.14,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/ASIANPAINT.NS",
+    "signal_reason": "🔥 Live Vol 3.14x avg",
+    "sectors": [
+      "Paint",
+      "Nifty50",
+      "Nifty100",
+      "Evergreen"
+    ],
+    "explanation": "Volume is 3.14x normal — unusually heavy buying activity. ⭐ Medium-high conviction signal."
+  },
+  {
+    "symbol": "APOLLOHOSP",
+    "asset_type": "Stock",
+    "score": 16.4,
+    "reasons": [
+      "🔥 Live Vol 2.64x avg"
+    ],
+    "price": 8097,
+    "volume_spike": 2.64,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/APOLLOHOSP.NS",
+    "signal_reason": "🔥 Live Vol 2.64x avg",
+    "sectors": [
+      "Pharma",
+      "Nifty50",
+      "Nifty100"
+    ],
+    "explanation": "Volume is 2.64x normal — strong interest today. 📊 Early stage signal — watch closely."
+  },
+  {
+    "symbol": "COALINDIA",
+    "asset_type": "Stock",
+    "score": 2.1,
+    "reasons": [
+      "Live Vol 1.04x avg"
+    ],
+    "price": 456.4,
+    "volume_spike": 1.04,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/COALINDIA.NS",
+    "signal_reason": "Live Vol 1.04x avg",
+    "sectors": [
+      "Metal",
+      "Nifty50",
+      "Nifty100",
+      "PSU",
+      "Dividend"
+    ],
+    "explanation": "Volume is 1.04x average — being tracked. 📊 Early stage signal — watch closely."
+  },
+  {
+    "symbol": "HDFCBANK",
+    "asset_type": "Stock",
+    "score": 2,
+    "reasons": [
+      "Live Vol 0.98x avg"
+    ],
+    "price": 780.85,
+    "volume_spike": 0.98,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/HDFCBANK.NS",
+    "signal_reason": "Live Vol 0.98x avg",
+    "sectors": [
+      "Private Banks",
+      "Nifty50",
+      "Nifty100"
+    ],
+    "explanation": "Volume is 0.98x average — being tracked. 📊 Early stage signal — watch closely."
+  },
+  {
+    "symbol": "TCS",
+    "asset_type": "Stock",
+    "score": 1.8,
+    "reasons": [
+      "Live Vol 0.92x avg"
+    ],
+    "price": 2394.4,
+    "volume_spike": 0.92,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/TCS.NS",
+    "signal_reason": "Live Vol 0.92x avg",
+    "sectors": [
+      "IT",
+      "Nifty50",
+      "Nifty100",
+      "Evergreen",
+      "Dividend"
+    ],
+    "explanation": "Volume is 0.92x average — being tracked. 📊 Early stage signal — watch closely."
+  },
+  {
+    "symbol": "ITC",
+    "asset_type": "Stock",
+    "score": 1.7,
+    "reasons": [
+      "Live Vol 0.85x avg"
+    ],
+    "price": 307.45,
+    "volume_spike": 0.85,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/ITC.NS",
+    "signal_reason": "Live Vol 0.85x avg",
+    "sectors": [
+      "FMCG",
+      "Nifty50",
+      "Nifty100",
+      "Dividend"
+    ],
+    "explanation": "Volume is 0.85x average — being tracked. 📊 Early stage signal — watch closely."
+  },
+  {
+    "symbol": "WIPRO",
+    "asset_type": "Stock",
+    "score": 1.7,
+    "reasons": [
+      "Live Vol 0.85x avg"
+    ],
+    "price": 197.91,
+    "volume_spike": 0.85,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/WIPRO.NS",
+    "signal_reason": "Live Vol 0.85x avg",
+    "sectors": [
+      "IT",
+      "Nifty50",
+      "Nifty100"
+    ],
+    "explanation": "Volume is 0.85x average — being tracked. 📊 Early stage signal — watch closely."
+  },
+  {
+    "symbol": "CIPLA",
+    "asset_type": "Stock",
+    "score": 1.5,
+    "reasons": [
+      "Live Vol 0.75x avg"
+    ],
+    "price": 1347,
+    "volume_spike": 0.75,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/CIPLA.NS",
+    "signal_reason": "Live Vol 0.75x avg",
+    "sectors": [
+      "Pharma",
+      "Nifty50",
+      "Nifty100"
+    ],
+    "explanation": "Volume is 0.75x average — being tracked. 📊 Early stage signal — watch closely."
+  },
+  {
+    "symbol": "INFY",
+    "asset_type": "Stock",
+    "score": 1.3,
+    "reasons": [
+      "Live Vol 0.65x avg"
+    ],
+    "price": 1179.2,
+    "volume_spike": 0.65,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/INFY.NS",
+    "signal_reason": "Live Vol 0.65x avg",
+    "sectors": [
+      "IT",
+      "Nifty50",
+      "Nifty100",
+      "Evergreen",
+      "Dividend"
+    ],
+    "explanation": "Volume is 0.65x average — being tracked. 📊 Early stage signal — watch closely."
+  },
+  {
+    "symbol": "AXISBANK",
+    "asset_type": "Stock",
+    "score": 1.3,
+    "reasons": [
+      "Live Vol 0.63x avg"
+    ],
+    "price": 1268.3,
+    "volume_spike": 0.63,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/AXISBANK.NS",
+    "signal_reason": "Live Vol 0.63x avg",
+    "sectors": [
+      "Private Banks",
+      "Nifty50",
+      "Nifty100"
+    ],
+    "explanation": "Volume is 0.63x average — being tracked. 📊 Early stage signal — watch closely."
+  },
+  {
+    "symbol": "TATASTEEL",
+    "asset_type": "Stock",
+    "score": 1.3,
+    "reasons": [
+      "Live Vol 0.64x avg"
+    ],
+    "price": 214.49,
+    "volume_spike": 0.64,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/TATASTEEL.NS",
+    "signal_reason": "Live Vol 0.64x avg",
+    "sectors": [
+      "Metal",
+      "Nifty50",
+      "Nifty100"
+    ],
+    "explanation": "Volume is 0.64x average — being tracked. 📊 Early stage signal — watch closely."
+  },
+  {
+    "symbol": "HINDALCO",
+    "asset_type": "Stock",
+    "score": 1.3,
+    "reasons": [
+      "Live Vol 0.63x avg"
+    ],
+    "price": 1044.4,
+    "volume_spike": 0.63,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/HINDALCO.NS",
+    "signal_reason": "Live Vol 0.63x avg",
+    "sectors": [
+      "Metal",
+      "Nifty50",
+      "Nifty100"
+    ],
+    "explanation": "Volume is 0.63x average — being tracked. 📊 Early stage signal — watch closely."
+  },
+  {
+    "symbol": "ICICIBANK",
+    "asset_type": "Stock",
+    "score": 1.2,
+    "reasons": [
+      "Live Vol 0.58x avg"
+    ],
+    "price": 1264.8,
+    "volume_spike": 0.58,
+    "deal_qty": 0,
+    "deal_value": 0,
+    "source_url": "https://finance.yahoo.com/quote/ICICIBANK.NS",
+    "signal_reason": "Live Vol 0.58x avg",
+    "sectors": [
+      "Private Banks",
+      "Nifty50",
+      "Nifty100"
+    ],
+    "explanation": "Volume is 0.58x average — being tracked. 📊 Early stage signal — watch closely."
+  }
+]
