@@ -5,6 +5,11 @@ export default function NewsTicker({ marketStatus, providersMeta }) {
   const [news, setNews] = useState([
     "📊 Loading market news...",
   ]);
+  const fallbackNews = [
+    "📊 Market headlines unavailable right now — retrying shortly",
+    "🏦 NSE session status shown above updates every minute",
+    "🔄 Use refresh in each section to pull latest available data",
+  ];
 
   const statusLabel = marketStatus?.isHoliday
     ? "Holiday"
@@ -18,9 +23,30 @@ export default function NewsTicker({ marketStatus, providersMeta }) {
       : "text-slate-300 border-slate-500/40 bg-slate-600/20";
 
   useEffect(() => {
-    axios.get("/api/news")
-      .then((r) => { if (r.data.news?.length) setNews(r.data.news); })
-      .catch(() => {});
+    let mounted = true;
+
+    const loadNews = () => {
+      axios.get("/api/news", { timeout: 15000 })
+        .then((r) => {
+          if (!mounted) return;
+          if (r.data.news?.length) {
+            setNews(r.data.news);
+          } else {
+            setNews(fallbackNews);
+          }
+        })
+        .catch(() => {
+          if (mounted) setNews(fallbackNews);
+        });
+    };
+
+    loadNews();
+    const timer = setInterval(loadNews, 60000);
+
+    return () => {
+      mounted = false;
+      clearInterval(timer);
+    };
   }, []);
 
   // Duplicate items for seamless infinite scroll

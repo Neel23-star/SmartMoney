@@ -770,6 +770,30 @@ function rankOptionContracts(contracts, limit) {
   return selected;
 }
 
+function deriveTopContractsFromOptionSignals(optionSignals, side, limit) {
+  const useCall = side === "call";
+  const ranked = (optionSignals || [])
+    .map((row) => {
+      const strike = useCall ? row.topCallStrike : row.topPutStrike;
+      const openInterest = useCall ? row.totalCallOI : row.totalPutOI;
+      const atm = useCall ? row.atmCall : row.atmPut;
+      const ltp = atm?.premium ?? atm?.lastPrice ?? null;
+      if (!Number.isFinite(strike) || !Number.isFinite(openInterest)) return null;
+      return {
+        symbol: row.symbol,
+        strike,
+        openInterest,
+        ltp: Number.isFinite(ltp) ? round2(ltp) : null,
+        rankScore: round2((Number(row.score) || 0) * 1000 + Math.max(openInterest, 0) * 0.001),
+        source: "derived_from_option_snapshot",
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => (b.rankScore || 0) - (a.rankScore || 0));
+
+  return ranked.slice(0, Math.max(10, Math.min(limit || 50, 1000)));
+}
+
 // ── Plain English explanation generator ──────────────────────────────────────
 function generateExplanation(signal) {
   const parts = [];
@@ -1233,7 +1257,7 @@ app.get("/api/etfs", async (req, res) => {
   try {
     if (req.query.refresh === "true") ETF_CACHE.fetchedAt = 0;
     const etfs = await fetchTopETFs();
-    res.json({ etfs, count: etfs.length, source: "NSE quote-equity" });
+    res.json({ etfs, count: etfs.length, source: "NSE quote-equity with Yahoo snapshot fallback" });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -1307,6 +1331,16 @@ app.get("/api/options", async (req, res) => {
       } else {
         notes.push("Bhavcopy was unavailable in this session.");
       }
+    }
+
+    if (options.length > 0 && topCalls.length === 0) {
+      topCalls = deriveTopContractsFromOptionSignals(options, "call", limit);
+      if (topCalls.length > 0) notes.push("Top calls were derived from available option snapshots.");
+    }
+
+    if (options.length > 0 && topPuts.length === 0) {
+      topPuts = deriveTopContractsFromOptionSignals(options, "put", limit);
+      if (topPuts.length > 0) notes.push("Top puts were derived from available option snapshots.");
     }
 
     res.json({
@@ -1555,10 +1589,13 @@ async function fetchTopETFs() {
     timeoutMs: 3000,
     interBatchDelayMs: 60,
   });
+  const yahooQuoteMap = await fetchStockQuoteMetrics(ETF_CATALOG.map((e) => e.symbol));
 
   const etfs = ETF_CATALOG.map((entry) => {
     const symbol = entry.symbol;
-    const q = quoteMap[`${symbol}.NS`] || null;
+    const nseQuote = quoteMap[`${symbol}.NS`] || null;
+    const yahooQuote = yahooQuoteMap[symbol] || null;
+    const q = nseQuote || yahooQuote;
     const nipponPriority = entry.issuer === "Nippon India" ? 1 : 0;
     const category = etfCategory(symbol);
     const volume = Number.isFinite(q?.regularMarketVolume) ? q.regularMarketVolume : 0;
@@ -1581,7 +1618,6 @@ async function fetchTopETFs() {
       source_url: `https://www.nseindia.com/get-quotes/equity?symbol=${encodeURIComponent(symbol)}`,
     };
   })
-    .filter((e) => e.price != null)
     .sort((a, b) => {
       if (b.nipponPriority !== a.nipponPriority) return b.nipponPriority - a.nipponPriority;
       if ((b.longTermScore || 0) !== (a.longTermScore || 0)) return (b.longTermScore || 0) - (a.longTermScore || 0);
