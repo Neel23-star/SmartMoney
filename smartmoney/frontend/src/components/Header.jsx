@@ -35,7 +35,7 @@ export default function Header({
         {/* Logo + Name */}
         <button onClick={onHome} className="flex items-center gap-2.5 hover:opacity-80 transition flex-shrink-0">
           <img
-            src={`${BASE}logo.png`}
+            src={`${BASE}logo.svg`}
             alt="Smart Money Screener logo"
             className="w-8 h-8 rounded-lg object-cover flex-shrink-0"
           />
