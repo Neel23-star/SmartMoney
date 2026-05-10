@@ -8,8 +8,8 @@ export const fetchSignals = (refresh = false) =>
 export const fetchSignalDetail = (symbol) =>
   axios.get(`${BASE}/api/signals/${symbol}`).then((r) => r.data);
 
-export const fetchOptions = (refresh = false) =>
-  axios.get(`${BASE}/api/options${refresh ? "?refresh=true" : ""}`).then((r) => r.data);
+export const fetchOptions = (refresh = false, limit = 500) =>
+  axios.get(`${BASE}/api/options?limit=${limit}${refresh ? "&refresh=true" : ""}`).then((r) => r.data);
 
 export const fetchGainers = (refresh = false) =>
   axios.get(`${BASE}/api/gainers${refresh ? "?refresh=true" : ""}`).then((r) => r.data);
@@ -25,4 +25,22 @@ export const fetchMarketStatus = () =>
 
 export const fetchNews = () =>
   axios.get(`${BASE}/api/news`).then((r) => r.data);
+
+export const fetchProviders = () =>
+  axios.get(`${BASE}/api/providers`).then((r) => r.data);
+
+export const fetchEtfs = (refresh = false) =>
+  axios.get(`${BASE}/api/etfs${refresh ? "?refresh=true" : ""}`).then((r) => r.data);
+
+export const fetchStockSearch = (symbol) =>
+  axios.get(`${BASE}/api/search?symbol=${encodeURIComponent(symbol)}`).then((r) => r.data);
+
+export const fetchAnalyticsSummary = () =>
+  axios.get(`${BASE}/api/analytics/summary`).then((r) => r.data);
+
+export const trackVisit = (sessionId) =>
+  axios.post(`${BASE}/api/analytics/visit`, { sessionId }).then((r) => r.data);
+
+export const trackHeartbeat = (sessionId) =>
+  axios.post(`${BASE}/api/analytics/heartbeat`, { sessionId }).then((r) => r.data);
 

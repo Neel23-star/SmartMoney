@@ -44,12 +44,6 @@ export default function MutualFundsPage() {
         <div className="bg-red-900/40 border border-red-500 rounded-xl p-4 mb-4 text-red-300 text-sm">⚠️ {error}</div>
       )}
 
-      <div className="bg-blue-900/20 border border-blue-500/30 rounded-xl p-3 mb-5">
-        <p className="text-blue-300 text-xs">
-          📡 Live NAV data from AMFI India. 1Y returns calculated from historical NAV. Past performance is not indicative of future results.
-        </p>
-      </div>
-
       {loading && funds.length === 0 ? (
         <div className="flex items-center justify-center h-48 text-slate-400">Loading NAV data…</div>
       ) : (
@@ -58,11 +52,8 @@ export default function MutualFundsPage() {
             const navUp = f.change > 0;
             const navDown = f.change < 0;
             return (
-              <a
+              <div
                 key={i}
-                href={`https://www.valueresearchonline.com/funds/selector/?plan=growth`}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="flex items-center gap-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-blue-500/50 rounded-xl p-4 transition group"
               >
                 <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600/30 flex items-center justify-center text-sm font-bold text-blue-300">
@@ -71,6 +62,11 @@ export default function MutualFundsPage() {
                 <div className="flex-1 min-w-0">
                   <div className="font-semibold text-white group-hover:text-blue-400 transition truncate">{f.name}</div>
                   <div className="text-xs text-slate-500">{f.category} · {f.amc}</div>
+                  <div className="text-xs text-slate-400 mt-1">{f.objective || "Diversified long-term allocation"}</div>
+                  <div className="mt-2 flex flex-wrap gap-2 text-[11px]">
+                    <span className="px-2 py-0.5 rounded-full border border-slate-600 bg-slate-900/60 text-slate-300">Risk: {f.riskLevel || "Moderate"}</span>
+                    <span className="px-2 py-0.5 rounded-full border border-slate-600 bg-slate-900/60 text-slate-300">Style: {f.style || "Blend"}</span>
+                  </div>
                 </div>
                 <div className="text-right flex-shrink-0">
                   {f.nav ? (
@@ -94,14 +90,14 @@ export default function MutualFundsPage() {
                     <div className="text-xs text-slate-500">Unavailable</div>
                   )}
                 </div>
-              </a>
+              </div>
             );
           })}
         </div>
       )}
 
       <p className="text-xs text-slate-600 text-center mt-6">
-        NAV data sourced from AMFI India · Past returns are not indicative of future performance
+        MF insights shown inside this page. Source policy for this app is NSE/BSE context only.
       </p>
     </div>
   );

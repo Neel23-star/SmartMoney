@@ -1,6 +1,0 @@
-{
-  "scripts": {
-    "build-frontend": "cd smartmoney/frontend && npm install && npm run build",
-    "start": "cd smartmoney/backend && npm install && npm start"
-  }
-}

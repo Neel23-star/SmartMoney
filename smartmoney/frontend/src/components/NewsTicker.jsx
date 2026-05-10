@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function NewsTicker() {
+export default function NewsTicker({ marketStatus, providersMeta }) {
   const [news, setNews] = useState([
     "📊 Loading market news...",
   ]);
+
+  const statusLabel = marketStatus?.isHoliday
+    ? "Holiday"
+    : marketStatus?.isOpen
+      ? "Live"
+      : "Closed";
+  const statusClass = marketStatus?.isHoliday
+    ? "text-amber-300 border-amber-400/40 bg-amber-500/10"
+    : marketStatus?.isOpen
+      ? "text-emerald-300 border-emerald-400/40 bg-emerald-500/10"
+      : "text-slate-300 border-slate-500/40 bg-slate-600/20";
 
   useEffect(() => {
     axios.get("/api/news")
@@ -14,6 +25,8 @@ export default function NewsTicker() {
 
   // Duplicate items for seamless infinite scroll
   const items = [...news, ...news];
+  const nseOk = providersMeta?.providers?.nse?.ok;
+  const bseOk = providersMeta?.providers?.bse?.ok;
 
   return (
     <div className="bg-slate-900 border-b border-slate-700 overflow-hidden">
@@ -21,6 +34,9 @@ export default function NewsTicker() {
         {/* Label */}
         <div className="flex-shrink-0 bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 uppercase tracking-wider">
           📰 Market
+        </div>
+        <div className={`ml-2 flex-shrink-0 text-[11px] px-2 py-0.5 rounded-full border ${statusClass}`}>
+          {statusLabel}
         </div>
         {/* Scrolling text */}
         <div className="overflow-hidden flex-1 py-1.5">
@@ -32,6 +48,29 @@ export default function NewsTicker() {
               </span>
             ))}
           </div>
+        </div>
+
+        <div className="hidden md:flex items-center gap-2 px-2">
+          <a
+            href="https://www.nseindia.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-2 py-0.5 rounded-md border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/10 transition flex items-center gap-1 text-[11px]"
+            title={`NSE provider: ${nseOk ? "reachable" : "not reachable"}`}
+          >
+            <span className={`inline-block w-1.5 h-1.5 rounded-full ${nseOk ? "bg-emerald-400" : "bg-red-400"}`} />
+            NSE India
+          </a>
+          <a
+            href="https://www.bseindia.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-2 py-0.5 rounded-md border border-blue-500/40 text-blue-300 hover:bg-blue-500/10 transition flex items-center gap-1 text-[11px]"
+            title={`BSE provider: ${bseOk ? "reachable" : "not reachable"}`}
+          >
+            <span className={`inline-block w-1.5 h-1.5 rounded-full ${bseOk ? "bg-emerald-400" : "bg-red-400"}`} />
+            BSE India
+          </a>
         </div>
       </div>
       <style>{`

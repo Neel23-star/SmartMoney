@@ -1,0 +1,35 @@
+{
+  "totalVisits": 50,
+  "totalSessions": 63,
+  "totalDurationSec": 200444,
+  "activeSessions": {
+    "sess_1778383343112_r2qljpni": {
+      "startedAt": 1778414668616,
+      "lastSeen": 1778416639213
+    },
+    "sess_1778415005421_kw2uvttd": {
+      "startedAt": 1778415325140,
+      "lastSeen": 1778416611709
+    },
+    "sess_1778415625766_f8fglkby": {
+      "startedAt": 1778415625778,
+      "lastSeen": 1778416611797
+    },
+    "sess_1778415682807_dcxbgu7x": {
+      "startedAt": 1778415682844,
+      "lastSeen": 1778416611724
+    },
+    "sess_1778415936329_kgxcgjkl": {
+      "startedAt": 1778415936387,
+      "lastSeen": 1778416656190
+    },
+    "sess_1778383399609_m77lytjw": {
+      "startedAt": 1778416275235,
+      "lastSeen": 1778416575633
+    },
+    "sess_1778383544793_3sh2p2r3": {
+      "startedAt": 1778416292596,
+      "lastSeen": 1778416595333
+    }
+  }
+}

@@ -4,16 +4,20 @@ const NAV_ITEMS = [
   { id: "home",        icon: "🏠", label: "Home" },
   { id: "stocks",      icon: "📈", label: "Stocks" },
   { id: "options",     icon: "🎯", label: "Options" },
+  { id: "etf",         icon: "📦", label: "ETF" },
   { id: "commodity",   icon: "🥇", label: "Commodity" },
-  { id: "mutualfunds", icon: "🏦", label: "Funds" },
+  { id: "search",      icon: "🔎", label: "Search" },
+  { id: "mutualfunds", icon: "🏦", label: "MF" },
 ];
 
-export default function BottomNav({ page, onSelect }) {
+export default function BottomNav({ page, stockFilter, onSelect }) {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-slate-900/95 backdrop-blur-md border-t border-slate-700 safe-area-bottom">
-      <div className="grid grid-cols-5 h-16">
+      <div className="grid h-16" style={{ gridTemplateColumns: `repeat(${NAV_ITEMS.length}, minmax(0, 1fr))` }}>
         {NAV_ITEMS.map((item) => {
-          const active = page === item.id;
+          const active = item.id === "etf"
+            ? page === "stocks" && stockFilter === "ETF"
+            : page === item.id;
           return (
             <button
               key={item.id}

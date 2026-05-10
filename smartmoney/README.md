@@ -24,6 +24,6 @@ Frontend runs at http://localhost:5173
 ## How it works
 1. Backend fetches NSE bulk deals, block deals, and volume spikes via yfinance
 2. Signals are scored and ranked
-3. Top 15 signals shown on dashboard
+3. Top 25 signals shown on dashboard
 4. Click any signal to see details and original source link
 5. Auto-refreshes at 9:20 AM & 3:35 PM IST on market days

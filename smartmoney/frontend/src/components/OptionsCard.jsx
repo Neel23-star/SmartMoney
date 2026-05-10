@@ -1,4 +1,5 @@
 import React from "react";
+import InfoHint from "./InfoHint";
 
 const SENTIMENT_STYLE = {
   Bullish: "text-emerald-400 bg-emerald-900/30 border-emerald-500/30",
@@ -35,9 +36,21 @@ export default function OptionsCard({ option, onClick }) {
 
       <div className="flex items-center justify-between text-xs text-slate-500">
         <div className="flex gap-3">
-          {option.pcr && <span>PCR: <span className="text-purple-300">{option.pcr}</span></span>}
-          {option.topCallStrike && <span>Call OI: ₹{option.topCallStrike}</span>}
-          {option.topPutStrike && <span>Put OI: ₹{option.topPutStrike}</span>}
+          {option.pcr && (
+            <span>
+              PCR<InfoHint text="Put/Call Ratio compares total put OI to call OI." />: <span className="text-purple-300">{option.pcr}</span>
+            </span>
+          )}
+          {option.topCallStrike && (
+            <span>
+              Call OI<InfoHint text="Strike with strongest call open interest concentration." />: ₹{option.topCallStrike}
+            </span>
+          )}
+          {option.topPutStrike && (
+            <span>
+              Put OI<InfoHint text="Strike with strongest put open interest concentration." />: ₹{option.topPutStrike}
+            </span>
+          )}
         </div>
         <span className="text-purple-500 group-hover:text-purple-400">View details →</span>
       </div>

@@ -4,6 +4,7 @@ const TYPE_COLORS = {
   Stock: "bg-blue-600/20 text-blue-300 border-blue-500/30",
   FnO: "bg-purple-600/20 text-purple-300 border-purple-500/30",
   Commodity: "bg-yellow-600/20 text-yellow-300 border-yellow-500/30",
+  ETF: "bg-teal-600/20 text-teal-300 border-teal-500/30",
 };
 
 const SCORE_COLOR = (score) => {
@@ -29,13 +30,38 @@ export default function SignalCard({ signal, onClick }) {
             {signal.asset_type}
           </span>
         </div>
-        <div className="text-right">
-          <div className={`text-xl font-bold ${SCORE_COLOR(signal.score)}`}>
-            {signal.score}
+        {signal.asset_type !== "ETF" && (
+          <div className="text-right">
+            <div className={`text-xl font-bold ${SCORE_COLOR(signal.score)}`}>
+              {signal.score}
+            </div>
+            <div className="text-xs text-slate-500">score</div>
           </div>
-          <div className="text-xs text-slate-500">score</div>
-        </div>
+        )}
       </div>
+
+      {signal.asset_type === "ETF" && signal.displayName && (
+        <div className="mb-2 space-y-1">
+          <p className="text-xs text-teal-300">{signal.displayName}</p>
+          <div className="flex flex-wrap gap-1.5 text-[10px]">
+            {signal.issuer && (
+              <span className="px-2 py-0.5 rounded-full border border-slate-600 text-slate-300 bg-slate-900/70">
+                {signal.issuer}
+              </span>
+            )}
+            {signal.rating != null && (
+              <span className="px-2 py-0.5 rounded-full border border-blue-500/40 text-blue-200 bg-blue-900/20">
+                Rating: {signal.rating}/10
+              </span>
+            )}
+            {signal.category && (signal.category === "Gold" || signal.category === "Silver") && signal.goldSilverScore != null && (
+              <span className="px-2 py-0.5 rounded-full border border-amber-500/40 text-amber-200 bg-amber-900/20">
+                {signal.category} Score: {signal.goldSilverScore}/100
+              </span>
+            )}
+          </div>
+        </div>
+      )}
 
       <p className="text-sm text-slate-300 mb-2">{signal.signal_reason}</p>
 

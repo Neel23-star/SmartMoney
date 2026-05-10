@@ -14,6 +14,7 @@ export const FILTERS = [
   { id: "Metal",        label: "⚙️ Metal",         color: "gray" },
   { id: "Infra",        label: "🏗️ Infra",         color: "amber" },
   { id: "Power",        label: "⚡ Power",          color: "yellow" },
+  { id: "ETF",          label: "📦 ETFs",           color: "teal" },
   { id: "Evergreen",    label: "🌿 Evergreen",     color: "green" },
   { id: "Dividend",     label: "💰 Dividend",      color: "emerald" },
   { id: "gainers",      label: "🟢 Top Gainers",   color: "green" },
@@ -33,6 +34,7 @@ const COLOR_MAP = {
   gray:    "bg-slate-500 text-white",
   amber:   "bg-amber-600 text-white",
   green:   "bg-green-600 text-white",
+  teal:    "bg-teal-600 text-white",
 };
 
 export default function StockFilters({ active, onChange }) {

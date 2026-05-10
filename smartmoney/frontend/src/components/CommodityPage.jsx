@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchCommodity } from "../api";
+import InfoHint from "./InfoHint";
 
 function formatValue(value, prefix = "", suffix = "") {
   if (value === null || value === undefined || Number.isNaN(value)) return "--";
@@ -20,6 +21,7 @@ function sentimentColor(sentiment) {
 export default function CommodityPage() {
   const [commodities, setCommodities] = useState([]);
   const [usdToInr, setUsdToInr] = useState(null);
+  const [source, setSource] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
@@ -31,6 +33,7 @@ export default function CommodityPage() {
       const data = await fetchCommodity(refresh);
       setCommodities(data.commodities || []);
       if (data.usdToInr) setUsdToInr(data.usdToInr);
+      setSource(data.source || null);
       setLastUpdated(new Date().toLocaleTimeString("en-IN"));
     } catch {
       setError("Could not load commodity data. Backend may be offline.");
@@ -62,17 +65,35 @@ export default function CommodityPage() {
         <div className="bg-red-900/40 border border-red-500 rounded-xl p-4 mb-4 text-red-300 text-sm">⚠️ {error}</div>
       )}
 
-      <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-xl p-3 mb-5 flex items-center justify-between gap-4">
-        <p className="text-yellow-300 text-xs">
-          📡 Prices in <strong>₹ INR</strong>. Futures quote, day range, volume/OI, and options proxy sentiment.
+      <div className="bg-blue-900/20 border border-blue-500/30 rounded-xl p-4 mb-5">
+        <p className="text-blue-300 text-sm">
+          💡 <strong>Gold & Silver ETFs</strong> for commodity exposure are featured in the <strong>ETF section</strong> with detailed ratings and issuer filters.
         </p>
-        {usdToInr && (
-          <span className="text-xs text-slate-400 flex-shrink-0">1 USD = ₹{usdToInr.toLocaleString()}</span>
-        )}
+        <p className="text-blue-300 text-xs mt-2">
+          Use the ETF section for comprehensive commodity ETF screening, ratings, and comparisons.
+        </p>
       </div>
+
+      {usdToInr && (
+        <div className="mb-5 text-xs text-slate-500">
+          FX Context: 1 USD = ₹{usdToInr.toLocaleString()}
+        </div>
+      )}
+
+      {source && (
+        <p className="text-[11px] text-slate-500 mb-4">
+          Source: {source}
+        </p>
+      )}
 
       {loading && commodities.length === 0 ? (
         <div className="flex items-center justify-center h-48 text-slate-400">Loading prices…</div>
+      ) : commodities.length === 0 ? (
+        <div className="text-center py-16 text-slate-400">
+          <div className="text-5xl mb-4">📈</div>
+          <p>No commodity spot prices available at this time.</p>
+          <p className="text-sm mt-2">Use the ETF section for gold and silver commodity tracking.</p>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {commodities.map((c) => {
@@ -93,14 +114,7 @@ export default function CommodityPage() {
                       <div className="text-xs text-slate-500">{c.futures?.exchange || c.exchange} · {c.unit}</div>
                     </div>
                   </div>
-                  <a
-                    href={`https://finance.yahoo.com/quote/${c.symbol}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-yellow-300 hover:text-yellow-200"
-                  >
-                    Futures ↗
-                  </a>
+                  <div className="text-[10px] uppercase tracking-wide text-slate-400">In-app data</div>
                 </div>
 
                 <div className="mt-3 flex items-end justify-between gap-2">
@@ -125,58 +139,53 @@ export default function CommodityPage() {
 
                 <div className="mt-3 grid grid-cols-2 gap-3 text-xs">
                   <div className="bg-slate-900/60 rounded-lg p-2 border border-slate-700">
-                    <div className="text-slate-400 mb-1">Day Range</div>
+                    <div className="text-slate-400 mb-1 inline-flex items-center">Day Range<InfoHint text="Today's low to high range for this ETF instrument." /></div>
                     <div className="text-slate-100">
                       {formatValue(c.futures?.dayLow, "₹")} – {formatValue(c.futures?.dayHigh, "₹")}
                     </div>
                   </div>
                   <div className="bg-slate-900/60 rounded-lg p-2 border border-slate-700">
-                    <div className="text-slate-400 mb-1">Futures OI</div>
+                    <div className="text-slate-400 mb-1 inline-flex items-center">Futures OI<InfoHint text="Open interest from linked derivative context when available." /></div>
                     <div className="text-slate-100">{formatCompact(c.futures?.openInterest)}</div>
                   </div>
                   <div className="bg-slate-900/60 rounded-lg p-2 border border-slate-700">
-                    <div className="text-slate-400 mb-1">Futures Volume</div>
+                    <div className="text-slate-400 mb-1 inline-flex items-center">Futures Volume<InfoHint text="Traded volume from official exchange quote feed." /></div>
                     <div className="text-slate-100">{formatCompact(c.futures?.volume)}</div>
                   </div>
                   <div className="bg-slate-900/60 rounded-lg p-2 border border-slate-700">
-                    <div className="text-slate-400 mb-1">Options PCR</div>
+                    <div className="text-slate-400 mb-1 inline-flex items-center">Options PCR<InfoHint text="Put/Call Ratio from related options chain context." /></div>
                     <div className={`font-medium ${sentimentColor(c.options?.sentiment)}`}>
                       {formatValue(c.options?.pcr)} {c.options?.sentiment ? `(${c.options.sentiment})` : ""}
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-3 bg-slate-900/60 rounded-lg p-2 border border-slate-700 text-xs">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-slate-400">Options Proxy</span>
-                    <a
-                      href={`https://finance.yahoo.com/quote/${c.options?.proxySymbol || ""}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-300 hover:text-blue-200"
-                    >
-                      {c.options?.proxySymbol || "--"} ↗
-                    </a>
-                  </div>
+                {c.options?.proxySymbol && (
+                  <div className="mt-3 bg-slate-900/60 rounded-lg p-2 border border-slate-700 text-xs">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-slate-400">Options Source</span>
+                      <span className="text-blue-300">{c.options?.proxySymbol || "--"}</span>
+                    </div>
 
-                  <div className="text-slate-200 truncate">{c.options?.proxyName || "Unavailable"}</div>
+                    <div className="text-slate-200 truncate">{c.options?.proxyName || "Unavailable"}</div>
 
-                  <div className="mt-1 text-slate-300">
-                    Proxy Px: {formatValue(c.options?.proxyPrice, "₹")} {c.options?.proxyChange != null ? (
-                      <span className={proxyUp ? "text-emerald-400" : proxyDown ? "text-red-400" : "text-slate-400"}>
-                        ({proxyUp ? "+" : ""}{c.options.proxyChange}%)
-                      </span>
-                    ) : null}
-                  </div>
+                    <div className="mt-1 text-slate-300">
+                      Proxy Px: {formatValue(c.options?.proxyPrice, "₹")} {c.options?.proxyChange != null ? (
+                        <span className={proxyUp ? "text-emerald-400" : proxyDown ? "text-red-400" : "text-slate-400"}>
+                          ({proxyUp ? "+" : ""}{c.options.proxyChange}%)
+                        </span>
+                      ) : null}
+                    </div>
 
-                  <div className="mt-1 text-slate-400 space-y-0.5">
-                    <div>Exp: {c.options?.expiry || "--"}</div>
-                    <div className="flex flex-wrap gap-x-3 gap-y-0.5">
-                      <span>ATM Call ₹{formatValue(c.options?.atmCall?.strike)} @ <span className="text-emerald-400">₹{formatValue(c.options?.atmCall?.lastPrice)}</span></span>
-                      <span>ATM Put ₹{formatValue(c.options?.atmPut?.strike)} @ <span className="text-red-400">₹{formatValue(c.options?.atmPut?.lastPrice)}</span></span>
+                    <div className="mt-1 text-slate-400 space-y-0.5">
+                      <div>Exp: {c.options?.expiry || "--"}</div>
+                      <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+                        <span>ATM Call ₹{formatValue(c.options?.atmCall?.strike)} @ <span className="text-emerald-400">₹{formatValue(c.options?.atmCall?.lastPrice)}</span></span>
+                        <span>ATM Put ₹{formatValue(c.options?.atmPut?.strike)} @ <span className="text-red-400">₹{formatValue(c.options?.atmPut?.lastPrice)}</span></span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             );
           })}
