@@ -47,15 +47,6 @@ const CATEGORIES = [
     hover: "hover:border-yellow-400",
   },
   {
-    id: "search",
-    icon: "🔎",
-    label: "Search",
-    desc: "Look up any stock and view smart activity score with interest highlights",
-    color: "from-cyan-600 to-cyan-800",
-    border: "border-cyan-500/40",
-    hover: "hover:border-cyan-400",
-  },
-  {
     id: "bonds",
     icon: "🧾",
     label: "Bonds",
@@ -69,7 +60,7 @@ const CATEGORIES = [
 
 export default function HomePage({ onSelect }) {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
       {/* Hero */}
       <div className="text-center mb-10">
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
@@ -102,7 +93,7 @@ export default function HomePage({ onSelect }) {
       </div>
 
       {/* Category Buttons */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}

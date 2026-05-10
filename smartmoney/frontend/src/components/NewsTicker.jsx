@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { fetchNews } from "../api";
 
 export default function NewsTicker({ marketStatus, providersMeta }) {
-  const [news, setNews] = useState([
-    "📊 Loading market news...",
-  ]);
   const fallbackNews = [
     "📊 Market headlines unavailable right now — retrying shortly",
     "🏦 NSE session status shown above updates every minute",
     "🔄 Use refresh in each section to pull latest available data",
   ];
+  const [news, setNews] = useState(fallbackNews);
 
   const statusLabel = marketStatus?.isHoliday
     ? "Holiday"
@@ -26,11 +24,11 @@ export default function NewsTicker({ marketStatus, providersMeta }) {
     let mounted = true;
 
     const loadNews = () => {
-      axios.get("/api/news", { timeout: 15000 })
+      fetchNews()
         .then((r) => {
           if (!mounted) return;
-          if (r.data.news?.length) {
-            setNews(r.data.news);
+          if (r.news?.length) {
+            setNews(r.news);
           } else {
             setNews(fallbackNews);
           }

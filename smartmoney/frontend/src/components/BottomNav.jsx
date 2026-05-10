@@ -17,7 +17,9 @@ export default function BottomNav({ page, stockFilter, onSelect }) {
         {NAV_ITEMS.map((item) => {
           const active = item.id === "etf"
             ? page === "stocks" && stockFilter === "ETF"
-            : page === item.id;
+            : item.id === "stocks"
+              ? page === "stocks" && stockFilter !== "ETF"
+              : page === item.id;
           return (
             <button
               key={item.id}

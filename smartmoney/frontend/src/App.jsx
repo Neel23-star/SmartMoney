@@ -287,7 +287,9 @@ export default function App() {
           {TABS.map((t) => {
             const active = t.id === "etf"
               ? page === "stocks" && stockFilter === "ETF"
-              : page === t.id;
+              : t.id === "stocks"
+                ? page === "stocks" && stockFilter !== "ETF"
+                : page === t.id;
             return (
             <button key={t.id} onClick={() => handleSelect(t.id)}
               className={`flex-shrink-0 px-4 py-1.5 rounded-lg text-sm font-medium transition whitespace-nowrap ${
@@ -300,9 +302,9 @@ export default function App() {
         </div>
       </div>
 
-      {educationMode && <EducationPanel page={page} stockFilter={stockFilter} />}
-
       {page === "home" && <HomePage onSelect={handleSelect} />}
+      {educationMode && page === "home" && <EducationPanel page={page} stockFilter={stockFilter} />}
+      {educationMode && page !== "home" && <EducationPanel page={page} stockFilter={stockFilter} />}
       {page === "commodity" && <CommodityPage />}
       {page === "mutualfunds" && <MutualFundsPage />}
       {page === "search" && <SearchPage />}
