@@ -35,6 +35,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: smartmoney/frontend/dist
+          name: github-pages
 
       - name: Deploy to Pages
         id: deployment
