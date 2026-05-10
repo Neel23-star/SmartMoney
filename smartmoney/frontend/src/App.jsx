@@ -288,7 +288,7 @@ export default function App() {
     <div className="min-h-screen pb-16 md:pb-0">
       <AlertBanner />
       <Header onRefresh={showRefresh ? () => loadData(true) : null} loading={loading} lastUpdated={showRefresh ? lastUpdated : null} onHome={() => handleSelect("home")} securityMode={securityMode} analytics={analytics} educationMode={educationMode} onToggleEducation={() => setEducationMode((v) => !v)} />
-      <IndexBar indices={indices} selectedIndex={selectedIndex} onSelectIndex={setSelectedIndex} />
+      <IndexBar indices={indices} selectedIndex={selectedIndex} onSelectIndex={setSelectedIndex} marketStatus={marketStatus} />
       <NewsTicker marketStatus={marketStatus} providersMeta={providersMeta} />
 
       <div className="bg-slate-900 border-b border-slate-800">
