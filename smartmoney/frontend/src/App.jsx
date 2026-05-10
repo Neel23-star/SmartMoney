@@ -449,11 +449,7 @@ export default function App() {
                     </div>
                   )}
 
-                  {optionsNotes.length > 0 && (
-                    <div className="text-[11px] text-amber-300/90">
-                      {optionsNotes[0]}
-                    </div>
-                  )}
+
                 </div>
               )}
 
