@@ -1110,8 +1110,72 @@ async function fetchGainersLosers() {
 }
 
 
+// ── Index definitions for /api/indices ───────────────────────────────────────
+const MARKET_INDICES = [
+  { id: "nifty50",    label: "Nifty 50",     symbol: "^NSEI",      exchange: "NSE" },
+  { id: "sensex",     label: "Sensex",        symbol: "^BSESN",     exchange: "BSE" },
+  { id: "banknifty",  label: "Bank Nifty",    symbol: "^NSEBANK",   exchange: "NSE" },
+  { id: "niftymid50", label: "Nifty Mid 50",  symbol: "^NSEMDCP50", exchange: "NSE" },
+  { id: "niftyit",    label: "Nifty IT",      symbol: "^CNXIT",     exchange: "NSE" },
+  { id: "niftynext50",label: "Nifty Next 50", symbol: "^NSMIDCP",   exchange: "NSE" },
+];
+
+let _indicesCache = null;
+let _indicesCacheAt = 0;
+const INDICES_CACHE_TTL = 30_000; // 30 s
+
+async function fetchLiveIndices() {
+  const now = Date.now();
+  if (_indicesCache && now - _indicesCacheAt < INDICES_CACHE_TTL) return _indicesCache;
+  try {
+    const symbols = MARKET_INDICES.map((i) => i.symbol);
+    const url = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${encodeURIComponent(symbols.join(","))}`;
+    const res = await axios.get(url, {
+      timeout: 8000,
+      headers: { "User-Agent": "Mozilla/5.0", Accept: "application/json" },
+    });
+    const quotes = res.data?.quoteResponse?.result || [];
+    const qMap = Object.fromEntries(quotes.map((q) => [q.symbol, q]));
+    const result = MARKET_INDICES.map((idx) => {
+      const q = qMap[idx.symbol] || {};
+      const price = q.regularMarketPrice ?? null;
+      const prev  = q.regularMarketPreviousClose ?? null;
+      const change = price != null && prev != null ? +(price - prev).toFixed(2) : null;
+      const changePct = q.regularMarketChangePercent != null
+        ? +q.regularMarketChangePercent.toFixed(2)
+        : null;
+      return {
+        id: idx.id,
+        label: idx.label,
+        exchange: idx.exchange,
+        price,
+        change,
+        changePct,
+        dayHigh: q.regularMarketDayHigh ?? null,
+        dayLow:  q.regularMarketDayLow  ?? null,
+        marketState: q.marketState ?? "CLOSED",
+      };
+    });
+    _indicesCache = result;
+    _indicesCacheAt = now;
+    return result;
+  } catch (err) {
+    console.error("[indices] fetch failed:", err.message);
+    return _indicesCache || MARKET_INDICES.map((i) => ({ id: i.id, label: i.label, exchange: i.exchange, price: null, change: null, changePct: null }));
+  }
+}
+
 // ── API Routes ────────────────────────────────────────────────────────────────
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
+
+app.get("/api/indices", async (req, res) => {
+  try {
+    const data = await fetchLiveIndices();
+    res.json({ indices: data, fetchedAt: new Date().toISOString() });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 app.get("/api/providers", async (req, res) => {
   try {

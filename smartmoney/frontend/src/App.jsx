@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { fetchSignals, fetchOptions, fetchGainers, fetchMarketStatus, fetchProviders, fetchAnalyticsSummary, trackVisit, trackHeartbeat, fetchEtfs } from "./api";
+import { fetchSignals, fetchOptions, fetchGainers, fetchMarketStatus, fetchProviders, fetchAnalyticsSummary, trackVisit, trackHeartbeat, fetchEtfs, fetchIndices } from "./api";
 import SignalCard from "./components/SignalCard";
 import SignalDetail from "./components/SignalDetail";
 import OptionsCard from "./components/OptionsCard";
@@ -14,6 +14,7 @@ import MutualFundsPage from "./components/MutualFundsPage";
 import SearchPage from "./components/SearchPage";
 import BottomNav from "./components/BottomNav";
 import EducationPanel from "./components/EducationPanel";
+import IndexBar from "./components/IndexBar";
 
 const TABS = [
   { id: "home",        label: "🏠 Home" },
@@ -47,6 +48,8 @@ export default function App() {
   const [securityMode, setSecurityMode] = useState("Open API");
   const [analytics, setAnalytics] = useState(null);
   const [educationMode, setEducationMode] = useState(() => localStorage.getItem("sm_education_mode") !== "off");
+  const [indices, setIndices] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
@@ -151,6 +154,18 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("sm_education_mode", educationMode ? "on" : "off");
   }, [educationMode]);
+
+  useEffect(() => {
+    let mounted = true;
+    const pullIndices = () => {
+      fetchIndices()
+        .then((d) => { if (mounted) setIndices(d.indices || []); })
+        .catch(() => {});
+    };
+    pullIndices();
+    const timer = setInterval(pullIndices, 30000);
+    return () => { mounted = false; clearInterval(timer); };
+  }, []);
 
   useEffect(() => {
     const getOrCreateSessionId = () => {
@@ -273,6 +288,7 @@ export default function App() {
     <div className="min-h-screen pb-16 md:pb-0">
       <AlertBanner />
       <Header onRefresh={showRefresh ? () => loadData(true) : null} loading={loading} lastUpdated={showRefresh ? lastUpdated : null} onHome={() => handleSelect("home")} securityMode={securityMode} analytics={analytics} educationMode={educationMode} onToggleEducation={() => setEducationMode((v) => !v)} />
+      <IndexBar indices={indices} selectedIndex={selectedIndex} onSelectIndex={setSelectedIndex} />
       <NewsTicker marketStatus={marketStatus} providersMeta={providersMeta} />
 
       <div className="bg-slate-900 border-b border-slate-800">

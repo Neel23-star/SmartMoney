@@ -48,3 +48,6 @@ export const trackVisit = (sessionId) =>
 export const trackHeartbeat = (sessionId) =>
   api.post(`/api/analytics/heartbeat`, { sessionId }).then((r) => r.data);
 
+export const fetchIndices = () =>
+  api.get(`/api/indices`).then((r) => r.data);
+
