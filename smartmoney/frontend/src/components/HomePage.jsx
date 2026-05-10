@@ -1,4 +1,5 @@
 import React from "react";
+import EducationPanel from "./EducationPanel";
 
 const CATEGORIES = [
   {
@@ -58,7 +59,7 @@ const CATEGORIES = [
   },
 ];
 
-export default function HomePage({ onSelect }) {
+export default function HomePage({ onSelect, educationMode }) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
       {/* Hero */}
@@ -91,6 +92,13 @@ export default function HomePage({ onSelect }) {
           </div>
         </div>
       </div>
+
+      {/* Section Guide — shown right after the Why section when education mode is on */}
+      {educationMode && (
+        <div className="mb-10">
+          <EducationPanel page="home" stockFilter={null} inline />
+        </div>
+      )}
 
       {/* Category Buttons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -318,8 +318,7 @@ export default function App() {
         </div>
       </div>
 
-      {page === "home" && <HomePage onSelect={handleSelect} />}
-      {educationMode && page === "home" && <EducationPanel page={page} stockFilter={stockFilter} />}
+      {page === "home" && <HomePage onSelect={handleSelect} educationMode={educationMode} />}
       {educationMode && page !== "home" && <EducationPanel page={page} stockFilter={stockFilter} />}
       {page === "commodity" && <CommodityPage />}
       {page === "mutualfunds" && <MutualFundsPage />}

@@ -47,13 +47,12 @@ const GLOSSARY = [
   { term: "ETF", meaning: "Exchange Traded Fund. Basket traded like a stock." },
 ];
 
-export default function EducationPanel({ page, stockFilter }) {
+export default function EducationPanel({ page, stockFilter, inline = false }) {
   const key = CONTENT[page] ? page : "home";
   const data = CONTENT[key];
   const showEtfNote = page === "stocks" && stockFilter === "ETF";
 
-  return (
-    <div className="max-w-5xl mx-auto px-4 pt-4">
+  const inner = (
       <div className="rounded-xl border border-sky-500/30 bg-sky-900/20 p-3">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
           <p className="text-sky-300 text-sm font-semibold">🎓 {data.title}</p>
@@ -95,6 +94,8 @@ export default function EducationPanel({ page, stockFilter }) {
           ))}
         </div>
       </div>
-    </div>
   );
+
+  if (inline) return inner;
+  return <div className="max-w-5xl mx-auto px-4 pt-4">{inner}</div>;
 }
