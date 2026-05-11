@@ -716,6 +716,7 @@ function optionsToSignals(optData) {
       atmCall: mapContract(atmCallContract),
       atmPut: mapContract(atmPutContract),
     };
+    signals[sym].explanation = generateExplanation(signals[sym]);
   }
   return signals;
 }
@@ -986,6 +987,40 @@ function deriveTopContractsFromOptionSignals(optionSignals, side, limit) {
 
 // ── Plain English explanation generator ──────────────────────────────────────
 function generateExplanation(signal) {
+  if (signal?.asset_type === "FnO") {
+    const parts = [];
+    const pcr = Number(signal?.pcr);
+    const callChange = Number(signal?.callOIChange);
+    const putChange = Number(signal?.putOIChange);
+    const score = Number(signal?.score || 0);
+
+    if (Number.isFinite(pcr)) {
+      if (pcr <= 0.6) parts.push(`PCR ${pcr} indicates strong bearish positioning with heavier Call-side pressure`);
+      else if (pcr <= 0.8) parts.push(`PCR ${pcr} indicates a mild bearish bias`);
+      else if (pcr >= 1.5) parts.push(`PCR ${pcr} indicates strong bullish positioning with heavier Put-side support`);
+      else if (pcr >= 1.2) parts.push(`PCR ${pcr} indicates a mild bullish bias`);
+      else parts.push(`PCR ${pcr} is near neutral`);
+    }
+
+    if (Number.isFinite(putChange) && Number.isFinite(callChange)) {
+      if (putChange > callChange) {
+        parts.push(`Put OI is building faster than Call OI, suggesting support near ${signal?.topPutStrike ?? "key strikes"}`);
+      } else if (callChange > putChange) {
+        parts.push(`Call OI is building faster than Put OI, suggesting resistance near ${signal?.topCallStrike ?? "key strikes"}`);
+      }
+    }
+
+    if (Number.isFinite(signal?.underlyingPrice)) {
+      parts.push(`Underlying is trading around ${signal.underlyingPrice}`);
+    }
+
+    if (score >= 20) parts.push("Signal confidence is high based on current positioning");
+    else if (score >= 10) parts.push("Signal confidence is moderate");
+    else parts.push("Early positioning signal; treat as watchlist context");
+
+    return `${parts.join(". ")}.`;
+  }
+
   const parts = [];
   const vol = signal.volume_spike;
   const hasBulk = signal.signal_reason?.includes("BULK");
@@ -1057,6 +1092,35 @@ function buildInterestHighlights(signal) {
   return highlights;
 }
 
+function enrichSignalNarrative(signal) {
+  if (!signal || typeof signal !== "object") return signal;
+  const enriched = { ...signal };
+
+  if ((!enriched.signal_reason || String(enriched.signal_reason).trim() === "") && Array.isArray(enriched.reasons) && enriched.reasons.length > 0) {
+    enriched.signal_reason = enriched.reasons.join(" | ");
+  }
+
+  if (!Array.isArray(enriched.reasons) && typeof enriched.signal_reason === "string" && enriched.signal_reason.trim()) {
+    enriched.reasons = enriched.signal_reason.split(" | ").map((x) => x.trim()).filter(Boolean);
+  }
+
+  if (!enriched.explanation || String(enriched.explanation).trim() === "") {
+    enriched.explanation = generateExplanation(enriched);
+  }
+
+  if (enriched.asset_type === "Stock" && (!Array.isArray(enriched.interestHighlights) || enriched.interestHighlights.length === 0)) {
+    enriched.interestHighlights = buildInterestHighlights(enriched);
+  }
+
+  return enriched;
+}
+
+function isStaticFallbackOptions(options = []) {
+  return Array.isArray(options)
+    && options.length > 0
+    && options.every((row) => String(row?.signal_reason || "").includes("Fallback snapshot while live option-chain feeds recover"));
+}
+
 function buildQuoteFallbackSignals(quoteMap = {}, sourceLabel = "Quote fallback") {
   return Object.values(quoteMap)
     .filter((q) => q?.symbol)
@@ -1124,7 +1188,7 @@ function buildOptionsQuoteFallback(quoteMap = {}) {
           : "Synthetic ATM levels built from underlying snapshot",
       ];
 
-      return {
+      const signal = {
         symbol,
         asset_type: "FnO",
         score: round2(Math.min(18, Math.abs(changePct) * 3 + 4)),
@@ -1160,6 +1224,8 @@ function buildOptionsQuoteFallback(quoteMap = {}) {
           volume: Number.isFinite(q.regularMarketVolume) ? q.regularMarketVolume : null,
         },
       };
+      signal.explanation = generateExplanation(signal);
+      return signal;
     })
     .filter(Boolean)
     .sort((a, b) => (b.score || 0) - (a.score || 0));
@@ -1199,30 +1265,34 @@ function buildStaticOptionsFallback() {
   return FNO_SYMBOLS
     .filter((sym) => !["NIFTY", "BANKNIFTY", "FINNIFTY"].includes(sym))
     .slice(0, 30)
-    .map((symbol) => ({
-      symbol,
-      asset_type: "FnO",
-      score: 3,
-      reasons: ["Fallback snapshot while live option-chain feeds recover"],
-      signal_reason: "Fallback snapshot while live option-chain feeds recover",
-      price: null,
-      volume_spike: null,
-      deal_qty: 0,
-      deal_value: 0,
-      source_url: `https://www.nseindia.com/get-quotes/equity?symbol=${encodeURIComponent(symbol)}`,
-      pcr: 1,
-      sentiment: "Neutral",
-      topCallStrike: null,
-      topPutStrike: null,
-      totalCallOI: null,
-      totalPutOI: null,
-      callOIChange: null,
-      putOIChange: null,
-      underlyingPrice: null,
-      expiry: null,
-      atmCall: null,
-      atmPut: null,
-    }));
+    .map((symbol) => {
+      const signal = {
+        symbol,
+        asset_type: "FnO",
+        score: 3,
+        reasons: ["Fallback snapshot while live option-chain feeds recover"],
+        signal_reason: "Fallback snapshot while live option-chain feeds recover",
+        price: null,
+        volume_spike: null,
+        deal_qty: 0,
+        deal_value: 0,
+        source_url: `https://www.nseindia.com/get-quotes/equity?symbol=${encodeURIComponent(symbol)}`,
+        pcr: 1,
+        sentiment: "Neutral",
+        topCallStrike: null,
+        topPutStrike: null,
+        totalCallOI: null,
+        totalPutOI: null,
+        callOIChange: null,
+        putOIChange: null,
+        underlyingPrice: null,
+        expiry: null,
+        atmCall: null,
+        atmPut: null,
+      };
+      signal.explanation = generateExplanation(signal);
+      return signal;
+    });
 }
 
 async function buildSingleStockSignal(symbolInput) {
@@ -1322,6 +1392,21 @@ async function buildSingleStockSignal(symbolInput) {
   );
 
   if (noLiveSnapshot) {
+    const directQuoteMap = await fetchYahooQuotes([`${symbol}.NS`, symbol]);
+    const directQuote = directQuoteMap[`${symbol}.NS`] || directQuoteMap[symbol] || null;
+    if (directQuote) {
+      signal.openPrice = Number.isFinite(signal.openPrice) ? signal.openPrice : (Number.isFinite(directQuote.regularMarketOpen) ? round2(directQuote.regularMarketOpen) : null);
+      signal.dayHigh = Number.isFinite(signal.dayHigh) ? signal.dayHigh : (Number.isFinite(directQuote.regularMarketDayHigh) ? round2(directQuote.regularMarketDayHigh) : null);
+      signal.dayLow = Number.isFinite(signal.dayLow) ? signal.dayLow : (Number.isFinite(directQuote.regularMarketDayLow) ? round2(directQuote.regularMarketDayLow) : null);
+      signal.closePrice = Number.isFinite(signal.closePrice) ? signal.closePrice : (Number.isFinite(directQuote.regularMarketPrice) ? round2(directQuote.regularMarketPrice) : null);
+      signal.prevClose = Number.isFinite(signal.prevClose) ? signal.prevClose : (Number.isFinite(directQuote.regularMarketPreviousClose) ? round2(directQuote.regularMarketPreviousClose) : null);
+      signal.week52High = Number.isFinite(signal.week52High) ? signal.week52High : (Number.isFinite(directQuote.fiftyTwoWeekHigh) ? round2(directQuote.fiftyTwoWeekHigh) : null);
+      signal.week52Low = Number.isFinite(signal.week52Low) ? signal.week52Low : (Number.isFinite(directQuote.fiftyTwoWeekLow) ? round2(directQuote.fiftyTwoWeekLow) : null);
+      if (!Number.isFinite(signal.volume_spike) && Number.isFinite(directQuote.regularMarketVolume) && Number.isFinite(volumeData?.avgVol) && volumeData.avgVol > 0) {
+        signal.volume_spike = round2(directQuote.regularMarketVolume / volumeData.avgVol);
+      }
+    }
+
     const cached = readSignals().find((s) => normalizeEquitySymbol(s.symbol) === symbol);
     if (cached) {
       signal.openPrice = Number.isFinite(signal.openPrice) ? signal.openPrice : (Number.isFinite(cached.openPrice) ? cached.openPrice : null);
@@ -1712,16 +1797,16 @@ app.get("/api/signals", async (req, res) => {
     const staleCache = getSignalsCacheAgeMs() > 2 * 60 * 1000;
 
     if (refreshRequested) {
-      const signals = await buildSignals();
+      const signals = (await buildSignals()).map(enrichSignalNarrative);
       return res.json({ signals, count: signals.length });
     }
     
-    let signals = readSignals();
+    let signals = readSignals().map(enrichSignalNarrative);
     console.log(`📊 Cache age: ${Math.round(getSignalsCacheAgeMs() / 1000)}s | Market open: ${liveMarket} | Stale: ${staleCache} | Signals: ${signals.length}`);
     
     if (signals.length === 0 || (liveMarket && staleCache)) {
       console.log("🔄 Rebuilding signals (empty or stale)");
-      signals = await buildSignals();
+      signals = (await buildSignals()).map(enrichSignalNarrative);
     }
     res.json({ signals, count: signals.length });
   } catch (e) {
@@ -1788,8 +1873,9 @@ app.get("/api/options", async (req, res) => {
     const liveMarket = isMarketOpenIST();
     const staleCache = getOptionsCacheAgeMs() > 5 * 60 * 1000; // 5 min for options
     
-    let options = readOptions();
+    let options = readOptions().map(enrichSignalNarrative);
     const cachedOptions = Array.isArray(options) ? [...options] : [];
+    const staticCacheOnly = isStaticFallbackOptions(cachedOptions);
     if (options.length > 0 && !("atmCall" in options[0])) {
       options = [];
     }
@@ -1800,7 +1886,7 @@ app.get("/api/options", async (req, res) => {
     const notes = [];
 
     // Force rebuild if: refresh requested, cache empty, or stale during market hours
-    const shouldRebuild = req.query.refresh === "true" || options.length === 0 || (liveMarket && staleCache);
+    const shouldRebuild = req.query.refresh === "true" || options.length === 0 || staticCacheOnly || (liveMarket && staleCache);
     
     if (shouldRebuild) {
       try {
@@ -1855,10 +1941,14 @@ app.get("/api/options", async (req, res) => {
         }
       }
 
-      if (options.length === 0 && cachedOptions.length > 0) {
+      if (options.length === 0 && cachedOptions.length > 0 && !staticCacheOnly) {
         options = cachedOptions;
         source = "cache";
         notes.push(`Live rebuild returned empty. Serving ${cachedOptions.length} cached FnO rows instead.`);
+      }
+
+      if (options.length === 0 && cachedOptions.length > 0 && staticCacheOnly) {
+        notes.push("Cached FnO snapshot is fallback-only; waiting for live or bhavcopy recovery.");
       }
 
       if (options.length === 0) {
@@ -1870,7 +1960,12 @@ app.get("/api/options", async (req, res) => {
       topCalls = rankOptionContracts(chains.flatMap((c) => c.calls || []), limit);
       topPuts = rankOptionContracts(chains.flatMap((c) => c.puts || []), limit);
 
-      writeOptions(options);
+      options = options.map(enrichSignalNarrative);
+      if (source !== "static_fallback") {
+        writeOptions(options);
+      } else {
+        notes.push("Static fallback rows were not persisted to cache to protect richer snapshots.");
+      }
       } catch (optErr) {
         console.error("Error rebuilding options:", optErr.message);
         if (cachedOptions.length > 0) {
@@ -1903,6 +1998,8 @@ app.get("/api/options", async (req, res) => {
       topPuts = deriveTopContractsFromOptionSignals(options, "put", limit);
       if (topPuts.length > 0) notes.push("Top puts were derived from available option snapshots.");
     }
+
+    options = options.map(enrichSignalNarrative);
 
     res.json({
       options,

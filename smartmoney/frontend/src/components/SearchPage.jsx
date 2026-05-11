@@ -44,6 +44,15 @@ export default function SearchPage() {
 
   const stock = result?.stock;
   const dividends = Array.isArray(stock?.dividends) ? stock.dividends : [];
+  const hasLiveSnapshot = Boolean(
+    stock && (
+      stock.closePrice != null ||
+      stock.openPrice != null ||
+      stock.dayHigh != null ||
+      stock.dayLow != null ||
+      stock.prevClose != null
+    )
+  );
 
   return (
     <main className="max-w-5xl mx-auto px-4 py-6">
@@ -96,6 +105,12 @@ export default function SearchPage() {
 
       {stock && (
         <div className="space-y-4">
+          {!hasLiveSnapshot && (
+            <div className="rounded-xl border border-amber-500/40 bg-amber-900/20 p-3 text-sm text-amber-200">
+              Live quote snapshot is temporarily unavailable for this symbol. Signal reasoning is still shown from the latest available market context.
+            </div>
+          )}
+
           <div className="rounded-2xl border border-slate-700 bg-slate-800/75 p-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>

@@ -9,9 +9,30 @@ const SENTIMENT_STYLE = {
 
 const SENTIMENT_ICON = { Bullish: "🐂", Bearish: "🐻", Neutral: "⚖️" };
 
+function getConfidenceMeta(scoreValue) {
+  const score = Number(scoreValue || 0);
+  if (score >= 20) {
+    return {
+      label: "High Confidence",
+      className: "text-emerald-300 bg-emerald-900/30 border-emerald-500/40",
+    };
+  }
+  if (score >= 10) {
+    return {
+      label: "Moderate Confidence",
+      className: "text-amber-300 bg-amber-900/30 border-amber-500/40",
+    };
+  }
+  return {
+    label: "Early Signal",
+    className: "text-slate-300 bg-slate-700/40 border-slate-500/40",
+  };
+}
+
 export default function OptionsCard({ option, onClick }) {
   const style = SENTIMENT_STYLE[option.sentiment] || SENTIMENT_STYLE.Neutral;
   const icon = SENTIMENT_ICON[option.sentiment] || "⚖️";
+  const confidence = getConfidenceMeta(option.score);
 
   return (
     <button
@@ -27,12 +48,20 @@ export default function OptionsCard({ option, onClick }) {
             F&O
           </span>
         </div>
-        <div className={`text-xs px-2 py-1 rounded-lg border font-semibold ${style}`}>
-          {icon} {option.sentiment}
+        <div className="flex flex-col items-end gap-1">
+          <div className={`text-xs px-2 py-1 rounded-lg border font-semibold ${style}`}>
+            {icon} {option.sentiment}
+          </div>
+          <div className={`text-[10px] px-2 py-0.5 rounded-full border font-medium ${confidence.className}`}>
+            {confidence.label}
+          </div>
         </div>
       </div>
 
-      <p className="text-xs text-slate-300 mb-2">{option.reasons?.[0]}</p>
+      <p className="text-xs text-slate-300 mb-1">{option.signal_reason || option.reasons?.[0] || "No reasoning available."}</p>
+      {option.explanation && (
+        <p className="text-[11px] text-slate-400 mb-2 italic">{option.explanation}</p>
+      )}
 
       <div className="flex items-center justify-between text-xs text-slate-500">
         <div className="flex gap-3">
