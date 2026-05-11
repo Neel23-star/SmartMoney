@@ -760,6 +760,37 @@ async function fetchNSEDividendActions(symbol, cookie) {
       })
       .filter((r) => r.date);
   } catch {
+    // Fall through to HTML listing scrape below.
+  }
+
+  try {
+    const pageUrl = "https://www.nseindia.com/companies-listing/corporate-filings-actions";
+    const res = await axios.get(pageUrl, {
+      timeout: 10000,
+      headers: { "User-Agent": "Mozilla/5.0", Accept: "text/html" },
+    });
+    const html = String(res.data || "");
+    const out = [];
+    const rowRegex = /\|\s*([A-Z0-9&-]+)\s*\|\s*([^|]+?)\s*\|\s*EQ\s*\|\s*([^|]*Dividend[^|]*)\s*\|\s*([0-9]+)\s*\|\s*([0-9]{2}-[A-Za-z]{3}-[0-9]{4})\s*\|/g;
+    let m;
+    while ((m = rowRegex.exec(html)) !== null) {
+      const rowSymbol = String(m[1] || "").trim().toUpperCase();
+      if (rowSymbol !== symbol) continue;
+      const purpose = String(m[3] || "").trim();
+      const date = parseDateToYmd(m[5]);
+      const amountMatch = purpose.match(/Rs\s*([0-9]+(?:\.[0-9]+)?)/i) || purpose.match(/Re\s*([0-9]+(?:\.[0-9]+)?)/i);
+      const amount = amountMatch ? Number(amountMatch[1]) : null;
+      if (!date) continue;
+      out.push({
+        date,
+        amount: Number.isFinite(amount) ? round2(amount) : null,
+        status: date >= new Date().toISOString().slice(0, 10) ? "upcoming" : "paid",
+        source: "nse_corporate_actions_page",
+        note: purpose,
+      });
+    }
+    return out;
+  } catch {
     return [];
   }
 }
