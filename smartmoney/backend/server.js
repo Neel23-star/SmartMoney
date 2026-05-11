@@ -732,6 +732,12 @@ function toYmd(epochSeconds) {
   return d.toISOString().slice(0, 10);
 }
 
+function parseDateToYmd(value) {
+  const d = new Date(String(value || "").trim());
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toISOString().slice(0, 10);
+}
+
 async function fetchNSEDividendActions(symbol, cookie) {
   try {
     const url = `https://www.nseindia.com/api/corporates-corporateActions?symbol=${encodeURIComponent(symbol)}`;
@@ -743,9 +749,7 @@ async function fetchNSEDividendActions(symbol, cookie) {
     return rows
       .filter((r) => /dividend/i.test(String(r?.purpose || "")))
       .map((r) => {
-        const dateText = String(r?.exDate || r?.recordDate || r?.bcStartDate || "").trim();
-        const d = new Date(dateText);
-        const ymd = Number.isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
+        const ymd = parseDateToYmd(r?.exDate || r?.recordDate || r?.bcStartDate || "");
         return {
           date: ymd,
           amount: null,
@@ -760,85 +764,68 @@ async function fetchNSEDividendActions(symbol, cookie) {
   }
 }
 
+// Known BSE refs for symbols where we want deterministic corporate-action fetch.
+const BSE_CORP_ACTION_REF = {
+  LT: "larsen--toubro-ltd/lt/500510",
+};
+
+async function fetchBSEDividendActions(symbol) {
+  const ref = BSE_CORP_ACTION_REF[symbol];
+  if (!ref) return [];
+  try {
+    const url = `https://www.bseindia.com/stock-share-price/${ref}/corp-actions`;
+    const res = await axios.get(url, {
+      timeout: 10000,
+      headers: { "User-Agent": "Mozilla/5.0", Accept: "text/html" },
+    });
+    const html = String(res.data || "");
+    const out = [];
+    const rowRegex = /<tr[^>]*>\s*<td[^>]*>\s*([^<]*Dividend[^<]*)\s*<\/td>\s*<td[^>]*>\s*([^<]*)\s*<\/td>\s*<td[^>]*>\s*([^<]*)\s*<\/td>/gi;
+    let m;
+    while ((m = rowRegex.exec(html)) !== null) {
+      const kind = String(m[1] || "").trim();
+      const amtRaw = String(m[2] || "").trim();
+      const dateRaw = String(m[3] || "").replace(/RD\s*/i, "").trim();
+      const ymd = parseDateToYmd(dateRaw);
+      if (!ymd) continue;
+      const amt = Number(amtRaw.replace(/[^0-9.\-]/g, ""));
+      out.push({
+        date: ymd,
+        amount: Number.isFinite(amt) ? round2(amt) : null,
+        status: ymd >= new Date().toISOString().slice(0, 10) ? "upcoming" : "paid",
+        source: "bse_corporate_actions",
+        note: kind || null,
+      });
+    }
+    return out;
+  } catch {
+    return [];
+  }
+}
+
 async function fetchDividendTimeline(symbol, quote, cookie = "") {
   const now = new Date();
   const thisYear = now.getUTCFullYear();
   const todayYmd = now.toISOString().slice(0, 10);
-  const rows = [];
-
-  try {
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}.NS?interval=1d&range=2y&events=div`;
-    const res = await axios.get(url, {
-      timeout: 8000,
-      headers: { "User-Agent": "Mozilla/5.0", Accept: "application/json" },
-    });
-    const events = res.data?.chart?.result?.[0]?.events?.dividends || {};
-    for (const key of Object.keys(events)) {
-      const ev = events[key] || {};
-      const date = toYmd(Number(ev.date));
-      if (!date) continue;
-      const year = Number(date.slice(0, 4));
-      const isCurrentYear = year === thisYear;
-      const isUpcoming = date >= todayYmd;
-      if (!isCurrentYear && !isUpcoming) continue;
-      rows.push({
-        date,
-        amount: Number.isFinite(ev.amount) ? round2(ev.amount) : null,
-        status: isUpcoming ? "upcoming" : "paid",
-        source: "yahoo_events",
-      });
-    }
-  } catch {
-    // Keep response resilient: we still return upcoming ex-date when available.
-  }
-
   const nseRows = await fetchNSEDividendActions(symbol, cookie);
-  rows.push(...nseRows);
-
-  const exDividendDate = Number(quote?.exDividendDate);
-  const upcomingDate = toYmd(exDividendDate);
-  if (upcomingDate && upcomingDate >= now.toISOString().slice(0, 10)) {
-    rows.push({
-      date: upcomingDate,
-      amount: null,
-      status: "upcoming",
-      source: "quote_ex_dividend_date",
-    });
-  }
+  const bseRows = await fetchBSEDividendActions(symbol);
+  const rows = [...nseRows, ...bseRows];
 
   const dedup = {};
   for (const row of rows) {
     const k = `${row.date}|${row.amount ?? "na"}|${row.status}`;
     dedup[k] = row;
   }
-  let out = Object.values(dedup).sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
-  // If nothing in current-year/upcoming, show the latest paid dividend as fallback.
-  if (out.length === 0) {
-    try {
-      const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}.NS?interval=1d&range=5y&events=div`;
-      const res = await axios.get(url, {
-        timeout: 8000,
-        headers: { "User-Agent": "Mozilla/5.0", Accept: "application/json" },
-      });
-      const events = res.data?.chart?.result?.[0]?.events?.dividends || {};
-      const all = Object.keys(events).map((k) => {
-        const ev = events[k] || {};
-        const date = toYmd(Number(ev.date));
-        return {
-          date,
-          amount: Number.isFinite(ev.amount) ? round2(ev.amount) : null,
-          status: "paid",
-          source: "yahoo_events",
-        };
-      }).filter((r) => r.date).sort((a, b) => String(b.date).localeCompare(String(a.date)));
-      if (all.length > 0) out = [all[0]];
-    } catch {
-      // no-op
-    }
-  }
+  const allRows = Object.values(dedup).sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  const scoped = allRows.filter((r) => {
+    const y = Number(String(r.date || "").slice(0, 4));
+    return y === thisYear || String(r.date) >= todayYmd;
+  });
+  if (scoped.length > 0) return scoped;
 
-  return out;
+  // If no current-year/upcoming rows, show latest known paid dividend.
+  return allRows.length > 0 ? [allRows[0]] : [];
 }
 
 async function fetchDividendTimelines(symbols, quoteMetrics = {}, cookie = "") {
