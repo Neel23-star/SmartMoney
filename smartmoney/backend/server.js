@@ -93,21 +93,36 @@ function analyticsSummary(analytics) {
 function readSignals() {
   try {
     if (fs.existsSync(DB_FILE)) {
-      return JSON.parse(fs.readFileSync(DB_FILE, "utf8"));
+      const data = JSON.parse(fs.readFileSync(DB_FILE, "utf8"));
+      // If old array format (no generatedAt), treat as empty to force rebuild
+      if (Array.isArray(data)) {
+        console.log("⚠️ Old signals format detected (array), forcing rebuild");
+        return [];
+      }
+      return data.signals || [];
     }
-  } catch {}
+  } catch (err) {
+    console.warn("Error reading signals:", err.message);
+  }
   return [];
 }
 
 function writeSignals(signals) {
-  fs.writeFileSync(DB_FILE, JSON.stringify(signals, null, 2));
+  const payload = {
+    signals: signals,
+    generatedAt: new Date().toISOString(),
+    count: signals.length
+  };
+  fs.writeFileSync(DB_FILE, JSON.stringify(payload, null, 2));
 }
 
 function getSignalsCacheAgeMs() {
   try {
     if (!fs.existsSync(DB_FILE)) return Number.POSITIVE_INFINITY;
-    const stats = fs.statSync(DB_FILE);
-    return Date.now() - stats.mtimeMs;
+    const data = JSON.parse(fs.readFileSync(DB_FILE, "utf8"));
+    const generatedAt = data.generatedAt || data[0]?.generatedAt;
+    if (!generatedAt) return Number.POSITIVE_INFINITY;
+    return Date.now() - new Date(generatedAt).getTime();
   } catch {
     return Number.POSITIVE_INFINITY;
   }
@@ -116,14 +131,39 @@ function getSignalsCacheAgeMs() {
 function readOptions() {
   try {
     if (fs.existsSync(OPTIONS_FILE)) {
-      return JSON.parse(fs.readFileSync(OPTIONS_FILE, "utf8"));
+      const data = JSON.parse(fs.readFileSync(OPTIONS_FILE, "utf8"));
+      // Handle both old array format and new object format
+      if (Array.isArray(data)) {
+        console.log("⚠️ Old options format detected (array), forcing rebuild");
+        return [];
+      }
+      return data.options || [];
     }
-  } catch {}
+  } catch (err) {
+    console.warn("Error reading options:", err.message);
+  }
   return [];
 }
 
 function writeOptions(options) {
-  fs.writeFileSync(OPTIONS_FILE, JSON.stringify(options, null, 2));
+  const payload = {
+    options: options,
+    generatedAt: new Date().toISOString(),
+    count: options.length
+  };
+  fs.writeFileSync(OPTIONS_FILE, JSON.stringify(payload, null, 2));
+}
+
+function getOptionsCacheAgeMs() {
+  try {
+    if (!fs.existsSync(OPTIONS_FILE)) return Number.POSITIVE_INFINITY;
+    const data = JSON.parse(fs.readFileSync(OPTIONS_FILE, "utf8"));
+    const generatedAt = data.generatedAt || data[0]?.generatedAt;
+    if (!generatedAt) return Number.POSITIVE_INFINITY;
+    return Date.now() - new Date(generatedAt).getTime();
+  } catch {
+    return Number.POSITIVE_INFINITY;
+  }
 }
 
 // ── NSE Headers ───────────────────────────────────────────────────────────────
@@ -1523,8 +1563,12 @@ app.get("/api/signals", async (req, res) => {
       const signals = await buildSignals();
       return res.json({ signals, count: signals.length });
     }
+    
     let signals = readSignals();
+    console.log(`📊 Cache age: ${Math.round(getSignalsCacheAgeMs() / 1000)}s | Market open: ${liveMarket} | Stale: ${staleCache} | Signals: ${signals.length}`);
+    
     if (signals.length === 0 || (liveMarket && staleCache)) {
+      console.log("🔄 Rebuilding signals (empty or stale)");
       signals = await buildSignals();
     }
     res.json({ signals, count: signals.length });
@@ -1589,6 +1633,9 @@ app.get("/api/etfs", async (req, res) => {
 app.get("/api/options", async (req, res) => {
   try {
     const limit = Math.max(10, Math.min(parseInt(req.query.limit || "500", 10), 1000));
+    const liveMarket = isMarketOpenIST();
+    const staleCache = getOptionsCacheAgeMs() > 5 * 60 * 1000; // 5 min for options
+    
     let options = readOptions();
     if (options.length > 0 && !("atmCall" in options[0])) {
       options = [];
@@ -1599,23 +1646,32 @@ app.get("/api/options", async (req, res) => {
     let source = "cache";
     const notes = [];
 
-    if (req.query.refresh === "true" || options.length === 0) {
-      const cookie = await getNSECookies();
-      const optionsRaw = [];
-      const chains = [];
+    // Force rebuild if: refresh requested, cache empty, or stale during market hours
+    const shouldRebuild = req.query.refresh === "true" || options.length === 0 || (liveMarket && staleCache);
+    
+    if (shouldRebuild) {
+      try {
+        console.log(`🔄 Rebuilding options (refresh=${req.query.refresh === "true"}, empty=${options.length === 0}, stale=${staleCache})`);
+        const cookie = await getNSECookies();
+        const optionsRaw = [];
+        const chains = [];
 
-      for (const sym of FNO_SYMBOLS) {
-        let chain = await fetchNSEOptionChain(sym, cookie);
-        if (!chain && ENABLE_YAHOO_FALLBACK && !["NIFTY", "BANKNIFTY", "FINNIFTY"].includes(sym)) {
-          chain = await fetchYahooNSEOptionChain(sym);
-          if (chain) notes.push(`Yahoo fallback used for ${sym}`);
+        for (const sym of FNO_SYMBOLS) {
+          try {
+            let chain = await fetchNSEOptionChain(sym, cookie);
+            if (!chain && ENABLE_YAHOO_FALLBACK && !["NIFTY", "BANKNIFTY", "FINNIFTY"].includes(sym)) {
+              chain = await fetchYahooNSEOptionChain(sym);
+              if (chain) notes.push(`Yahoo fallback used for ${sym}`);
+            }
+            if (chain) {
+              chains.push(chain);
+              optionsRaw.push(chain);
+            }
+          } catch (err) {
+            console.warn(`Warning: Option chain fetch failed for ${sym}: ${err.message}`);
+          }
+          await new Promise((r) => setTimeout(r, 300));
         }
-        if (chain) {
-          chains.push(chain);
-          optionsRaw.push(chain);
-        }
-        await new Promise((r) => setTimeout(r, 300));
-      }
 
       if (chains.length > 0) source = "nse_live_chain";
 
@@ -1641,6 +1697,10 @@ app.get("/api/options", async (req, res) => {
       topPuts = rankOptionContracts(chains.flatMap((c) => c.puts || []), limit);
 
       writeOptions(options);
+      } catch (optErr) {
+        console.error("Error rebuilding options:", optErr.message);
+        notes.push(`Error building options: ${optErr.message}`);
+      }
     } else {
       const bhav = await fetchFOBhavcopyRows();
       tradeDate = bhav.tradeDate;
