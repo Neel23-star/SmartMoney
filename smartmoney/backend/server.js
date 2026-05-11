@@ -738,58 +738,55 @@ function parseDateToYmd(value) {
   return d.toISOString().slice(0, 10);
 }
 
+function parseDividendAmount(text) {
+  const raw = String(text || "");
+  const m = raw.match(/\bRs\s*([0-9]+(?:\.[0-9]+)?)/i) || raw.match(/\bRe\s*([0-9]+(?:\.[0-9]+)?)/i);
+  const amount = m ? Number(m[1]) : null;
+  return Number.isFinite(amount) ? round2(amount) : null;
+}
+
+function normalizeNSEDividendRows(rows, symbol) {
+  const target = String(symbol || "").trim().toUpperCase();
+  const todayYmd = new Date().toISOString().slice(0, 10);
+  return (Array.isArray(rows) ? rows : [])
+    .filter((row) => String(row?.symbol || "").trim().toUpperCase() === target)
+    .map((row) => {
+      const note = String(row?.subject || row?.purpose || "").trim();
+      if (!/dividend/i.test(note)) return null;
+      const date = parseDateToYmd(row?.exDate || row?.recDate || row?.recordDate || row?.bcStartDate || "");
+      if (!date) return null;
+      return {
+        date,
+        amount: parseDividendAmount(note),
+        status: date >= todayYmd ? "upcoming" : "paid",
+        source: "nse_corporate_actions",
+        note: note || null,
+      };
+    })
+    .filter(Boolean);
+}
+
 async function fetchNSEDividendActions(symbol, cookie) {
   try {
-    const url = `https://www.nseindia.com/api/corporates-corporateActions?symbol=${encodeURIComponent(symbol)}`;
+    const url = "https://www.nseindia.com/api/corporates-corporateActions?index=equities";
     const res = await axios.get(url, {
       timeout: 9000,
       headers: { ...NSE_HEADERS, Cookie: cookie },
     });
     const rows = Array.isArray(res.data) ? res.data : Array.isArray(res.data?.data) ? res.data.data : [];
-    return rows
-      .filter((r) => /dividend/i.test(String(r?.purpose || "")))
-      .map((r) => {
-        const ymd = parseDateToYmd(r?.exDate || r?.recordDate || r?.bcStartDate || "");
-        return {
-          date: ymd,
-          amount: null,
-          status: ymd && ymd >= new Date().toISOString().slice(0, 10) ? "upcoming" : "paid",
-          source: "nse_corporate_actions",
-          note: String(r?.purpose || "").trim() || null,
-        };
-      })
-      .filter((r) => r.date);
+    const normalized = normalizeNSEDividendRows(rows, symbol);
+    if (normalized.length > 0) return normalized;
   } catch {
-    // Fall through to HTML listing scrape below.
+    // Fall through to static JSON fallback below.
   }
 
   try {
-    const pageUrl = "https://www.nseindia.com/companies-listing/corporate-filings-actions";
-    const res = await axios.get(pageUrl, {
+    const res = await axios.get("https://www.nseindia.com/json/CorporateFiling/CF-corpactions-equity.json", {
       timeout: 10000,
-      headers: { "User-Agent": "Mozilla/5.0", Accept: "text/html" },
+      headers: { ...NSE_HEADERS, Cookie: cookie },
     });
-    const html = String(res.data || "");
-    const out = [];
-    const rowRegex = /\|\s*([A-Z0-9&-]+)\s*\|\s*([^|]+?)\s*\|\s*EQ\s*\|\s*([^|]*Dividend[^|]*)\s*\|\s*([0-9]+)\s*\|\s*([0-9]{2}-[A-Za-z]{3}-[0-9]{4})\s*\|/g;
-    let m;
-    while ((m = rowRegex.exec(html)) !== null) {
-      const rowSymbol = String(m[1] || "").trim().toUpperCase();
-      if (rowSymbol !== symbol) continue;
-      const purpose = String(m[3] || "").trim();
-      const date = parseDateToYmd(m[5]);
-      const amountMatch = purpose.match(/Rs\s*([0-9]+(?:\.[0-9]+)?)/i) || purpose.match(/Re\s*([0-9]+(?:\.[0-9]+)?)/i);
-      const amount = amountMatch ? Number(amountMatch[1]) : null;
-      if (!date) continue;
-      out.push({
-        date,
-        amount: Number.isFinite(amount) ? round2(amount) : null,
-        status: date >= new Date().toISOString().slice(0, 10) ? "upcoming" : "paid",
-        source: "nse_corporate_actions_page",
-        note: purpose,
-      });
-    }
-    return out;
+    const rows = Array.isArray(res.data) ? res.data : Array.isArray(res.data?.data) ? res.data.data : [];
+    return normalizeNSEDividendRows(rows, symbol);
   } catch {
     return [];
   }
