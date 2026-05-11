@@ -88,10 +88,11 @@ export default function App() {
           const data = await fetchEtfs(refresh);
           setEtfs(mapEtfRows(data.etfs));
         } else {
-          const data = await fetchSignals(refresh);
+          const shouldForceLiveRefresh = refresh || Boolean(marketStatus?.isOpen);
+          const data = await fetchSignals(shouldForceLiveRefresh);
           setSignals(data.signals || []);
           // Pre-fetch gainers/losers silently
-          fetchGainers(refresh).then(d => { setGainers(d.gainers || []); setLosers(d.losers || []); }).catch(() => {});
+          fetchGainers(shouldForceLiveRefresh).then(d => { setGainers(d.gainers || []); setLosers(d.losers || []); }).catch(() => {});
         }
       } else if (page === "options") {
         const data = await fetchOptions(refresh, optionsLimit);
@@ -109,7 +110,7 @@ export default function App() {
     } finally {
       setLoading(false);
     }
-  }, [page, optionsLimit, stockFilter, mapEtfRows]);
+  }, [page, optionsLimit, stockFilter, mapEtfRows, marketStatus]);
 
   useEffect(() => {
     let mounted = true;
@@ -129,6 +130,14 @@ export default function App() {
       loadData(false);
     }
   }, [page, stockFilter, loadData]);
+
+  useEffect(() => {
+    if (page !== "stocks" || stockFilter === "ETF" || !marketStatus?.isOpen) return;
+    const timer = setInterval(() => {
+      loadData(true);
+    }, 60000);
+    return () => clearInterval(timer);
+  }, [page, stockFilter, marketStatus, loadData]);
 
   useEffect(() => { loadData(); }, [loadData]);
 

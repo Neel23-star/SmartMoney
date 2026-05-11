@@ -103,6 +103,16 @@ function writeSignals(signals) {
   fs.writeFileSync(DB_FILE, JSON.stringify(signals, null, 2));
 }
 
+function getSignalsCacheAgeMs() {
+  try {
+    if (!fs.existsSync(DB_FILE)) return Number.POSITIVE_INFINITY;
+    const stats = fs.statSync(DB_FILE);
+    return Date.now() - stats.mtimeMs;
+  } catch {
+    return Number.POSITIVE_INFINITY;
+  }
+}
+
 function readOptions() {
   try {
     if (fs.existsSync(OPTIONS_FILE)) {
@@ -1505,12 +1515,16 @@ app.post("/api/analytics/session-end", (req, res) => {
 
 app.get("/api/signals", async (req, res) => {
   try {
-    if (req.query.refresh === "true") {
+    const refreshRequested = req.query.refresh === "true";
+    const liveMarket = isMarketOpenIST();
+    const staleCache = getSignalsCacheAgeMs() > 2 * 60 * 1000;
+
+    if (refreshRequested) {
       const signals = await buildSignals();
       return res.json({ signals, count: signals.length });
     }
     let signals = readSignals();
-    if (signals.length === 0) {
+    if (signals.length === 0 || (liveMarket && staleCache)) {
       signals = await buildSignals();
     }
     res.json({ signals, count: signals.length });
@@ -2243,7 +2257,7 @@ app.get("/api/mutualfunds", async (req, res) => {
 });
 
 // ── Market status helper ──────────────────────────────────────────────────────
-app.get("/api/market-status", (req, res) => {
+function getMarketStatusSnapshot() {
   const nowIST = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
   const day = nowIST.getDay(); // 0=Sun, 6=Sat
   const hours = nowIST.getHours();
@@ -2253,14 +2267,22 @@ app.get("/api/market-status", (req, res) => {
   const isHoliday = !isWeekday;
   const isOpen = isWeekday && timeMin >= 555 && timeMin <= 930; // 9:15 AM to 3:30 PM IST
   const status = isHoliday ? "Holiday" : isOpen ? "Live" : "Market Closed";
-  res.json({
+  return {
     isOpen,
     isHoliday,
     status,
     session: isOpen ? "Live Data" : "Market Closed",
     istTime: `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}`,
     day,
-  });
+  };
+}
+
+function isMarketOpenIST() {
+  return Boolean(getMarketStatusSnapshot().isOpen);
+}
+
+app.get("/api/market-status", (req, res) => {
+  res.json(getMarketStatusSnapshot());
 });
 
 // ── Scheduler: 9:20 AM and 3:35 PM IST on weekdays ───────────────────────────
