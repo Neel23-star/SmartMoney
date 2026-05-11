@@ -1167,6 +1167,64 @@ function buildOptionsQuoteFallback(quoteMap = {}) {
   return rows.slice(0, 30);
 }
 
+function buildStaticStockFallback() {
+  return NIFTY50.slice(0, 25).map((symbol) => {
+    const signal = {
+      symbol,
+      asset_type: "Stock",
+      score: 1,
+      reasons: ["Fallback snapshot while live feeds recover"],
+      signal_reason: "Fallback snapshot while live feeds recover",
+      sectors: getSectors(symbol),
+      volume_spike: null,
+      deal_qty: 0,
+      deal_value: 0,
+      source_url: `https://www.nseindia.com/get-quotes/equity?symbol=${encodeURIComponent(symbol)}`,
+      openPrice: null,
+      dayHigh: null,
+      dayLow: null,
+      closePrice: null,
+      prevClose: null,
+      week52High: null,
+      week52Low: null,
+      dividends: [],
+    };
+    signal.explanation = generateExplanation(signal);
+    signal.interestHighlights = buildInterestHighlights(signal);
+    return signal;
+  });
+}
+
+function buildStaticOptionsFallback() {
+  return FNO_SYMBOLS
+    .filter((sym) => !["NIFTY", "BANKNIFTY", "FINNIFTY"].includes(sym))
+    .slice(0, 30)
+    .map((symbol) => ({
+      symbol,
+      asset_type: "FnO",
+      score: 3,
+      reasons: ["Fallback snapshot while live option-chain feeds recover"],
+      signal_reason: "Fallback snapshot while live option-chain feeds recover",
+      price: null,
+      volume_spike: null,
+      deal_qty: 0,
+      deal_value: 0,
+      source_url: `https://www.nseindia.com/get-quotes/equity?symbol=${encodeURIComponent(symbol)}`,
+      pcr: 1,
+      sentiment: "Neutral",
+      topCallStrike: null,
+      topPutStrike: null,
+      totalCallOI: null,
+      totalPutOI: null,
+      callOIChange: null,
+      putOIChange: null,
+      underlyingPrice: null,
+      expiry: null,
+      atmCall: null,
+      atmPut: null,
+    }));
+}
+
 async function buildSingleStockSignal(symbolInput) {
   const symbol = normalizeEquitySymbol(symbolInput);
   if (!symbol) {
@@ -1442,6 +1500,13 @@ async function buildSignals() {
   if (ranked.length === 0 && cachedSignals.length > 0) {
     console.log(`⚠️ Live signal rebuild returned empty. Serving ${cachedSignals.length} cached signals instead.`);
     return cachedSignals;
+  }
+
+  if (ranked.length === 0) {
+    const staticFallback = buildStaticStockFallback();
+    writeSignals(staticFallback);
+    console.log(`⚠️ Live signal rebuild empty and no cache available. Serving ${staticFallback.length} static fallback signals.`);
+    return staticFallback;
   }
 
   writeSignals(ranked);
@@ -1794,6 +1859,12 @@ app.get("/api/options", async (req, res) => {
         options = cachedOptions;
         source = "cache";
         notes.push(`Live rebuild returned empty. Serving ${cachedOptions.length} cached FnO rows instead.`);
+      }
+
+      if (options.length === 0) {
+        options = buildStaticOptionsFallback();
+        source = "static_fallback";
+        notes.push("Live rebuild returned empty and no cache was available. Serving static FnO fallback rows.");
       }
 
       topCalls = rankOptionContracts(chains.flatMap((c) => c.calls || []), limit);
