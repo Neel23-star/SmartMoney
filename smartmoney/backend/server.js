@@ -1135,6 +1135,7 @@ async function buildSingleStockSignal(symbolInput) {
 // ── Build & rank signals ──────────────────────────────────────────────────────
 async function buildSignals() {
   console.log("🔍 Fetching smart money signals...");
+  const cachedSignals = readSignals();
 
   const cookie = await getNSECookies();
   const [bulk, block] = await Promise.all([
@@ -1240,6 +1241,11 @@ async function buildSignals() {
   const dividendMap = await fetchDividendTimelines(ranked.map((s) => s.symbol), yahooQuoteMetrics, cookie);
   for (const row of ranked) {
     row.dividends = dividendMap[row.symbol] || [];
+  }
+
+  if (ranked.length === 0 && cachedSignals.length > 0) {
+    console.log(`⚠️ Live signal rebuild returned empty. Serving ${cachedSignals.length} cached signals instead.`);
+    return cachedSignals;
   }
 
   writeSignals(ranked);
