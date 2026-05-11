@@ -1,694 +1,739 @@
-[
-  {
-    "symbol": "TITAN",
-    "asset_type": "Stock",
-    "score": 42.3,
-    "reasons": [
-      "🔥 Live Vol 5.23x avg"
-    ],
-    "price": 4509,
-    "volume_spike": 5.23,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/TITAN.NS",
-    "signal_reason": "🔥 Live Vol 5.23x avg",
-    "sectors": [
-      "Consumer",
-      "Nifty50",
-      "Nifty100",
-      "Evergreen"
-    ],
-    "openPrice": 4314,
-    "dayHigh": 4605,
-    "dayLow": 4213.4,
-    "closePrice": 4517,
-    "prevClose": 4307.5,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 5.23x normal — unusually heavy buying activity. 🔥 Very high conviction signal."
-  },
-  {
-    "symbol": "SBIN",
-    "asset_type": "Stock",
-    "score": 27.3,
-    "reasons": [
-      "🔥 Live Vol 3.73x avg"
-    ],
-    "price": 1019.3,
-    "volume_spike": 3.73,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/SBIN.NS",
-    "signal_reason": "🔥 Live Vol 3.73x avg",
-    "sectors": [
-      "PSU Banks",
-      "Nifty50",
-      "Nifty100"
-    ],
-    "openPrice": 1090,
-    "dayHigh": 1095,
-    "dayLow": 1010.9,
-    "closePrice": 1018.4,
-    "prevClose": 1092,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 3.73x normal — unusually heavy buying activity. ⭐ Medium-high conviction signal."
-  },
-  {
-    "symbol": "ASIANPAINT",
-    "asset_type": "Stock",
-    "score": 20,
-    "reasons": [
-      "🔥 Live Vol 3x avg"
-    ],
-    "price": 2599.9,
-    "volume_spike": 3,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/ASIANPAINT.NS",
-    "signal_reason": "🔥 Live Vol 3x avg",
-    "sectors": [
-      "Paint",
-      "Nifty50",
-      "Nifty100",
-      "Evergreen"
-    ],
-    "openPrice": 2540,
-    "dayHigh": 2607.4,
-    "dayLow": 2515.4,
-    "closePrice": 2600,
-    "prevClose": 2530.6,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 3x normal — unusually heavy buying activity. ⭐ Medium-high conviction signal."
-  },
-  {
-    "symbol": "APOLLOHOSP",
-    "asset_type": "Stock",
-    "score": 16.1,
-    "reasons": [
-      "🔥 Live Vol 2.61x avg"
-    ],
-    "price": 8097,
-    "volume_spike": 2.61,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/APOLLOHOSP.NS",
-    "signal_reason": "🔥 Live Vol 2.61x avg",
-    "sectors": [
-      "Pharma",
-      "Nifty50",
-      "Nifty100"
-    ],
-    "openPrice": 7837,
-    "dayHigh": 8115,
-    "dayLow": 7812.5,
-    "closePrice": 8105,
-    "prevClose": 7837,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 2.61x normal — strong interest today. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "HDFCBANK",
-    "asset_type": "Stock",
-    "score": 1.9,
-    "reasons": [
-      "Live Vol 0.96x avg"
-    ],
-    "price": 780.85,
-    "volume_spike": 0.96,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/HDFCBANK.NS",
-    "signal_reason": "Live Vol 0.96x avg",
-    "sectors": [
-      "Private Banks",
-      "Nifty50",
-      "Nifty100"
-    ],
-    "openPrice": 784,
-    "dayHigh": 788.75,
-    "dayLow": 777.2,
-    "closePrice": 781,
-    "prevClose": 796.05,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.96x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "COALINDIA",
-    "asset_type": "Stock",
-    "score": 1.9,
-    "reasons": [
-      "Live Vol 0.95x avg"
-    ],
-    "price": 456.4,
-    "volume_spike": 0.95,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/COALINDIA.NS",
-    "signal_reason": "Live Vol 0.95x avg",
-    "sectors": [
-      "Metal",
-      "Nifty50",
-      "Nifty100",
-      "PSU",
-      "Dividend"
-    ],
-    "openPrice": 461.2,
-    "dayHigh": 463.35,
-    "dayLow": 454.9,
-    "closePrice": 457,
-    "prevClose": 466.65,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.95x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "TCS",
-    "asset_type": "Stock",
-    "score": 1.8,
-    "reasons": [
-      "Live Vol 0.89x avg"
-    ],
-    "price": 2394.4,
-    "volume_spike": 0.89,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/TCS.NS",
-    "signal_reason": "Live Vol 0.89x avg",
-    "sectors": [
-      "IT",
-      "Nifty50",
-      "Nifty100",
-      "Evergreen",
-      "Dividend"
-    ],
-    "openPrice": 2398,
-    "dayHigh": 2407,
-    "dayLow": 2375.1,
-    "closePrice": 2397.2,
-    "prevClose": 2401.4,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.89x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "ITC",
-    "asset_type": "Stock",
-    "score": 1.7,
-    "reasons": [
-      "Live Vol 0.84x avg"
-    ],
-    "price": 307.45,
-    "volume_spike": 0.84,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/ITC.NS",
-    "signal_reason": "Live Vol 0.84x avg",
-    "sectors": [
-      "FMCG",
-      "Nifty50",
-      "Nifty100",
-      "Dividend"
-    ],
-    "openPrice": 308.9,
-    "dayHigh": 308.9,
-    "dayLow": 305.7,
-    "closePrice": 307.2,
-    "prevClose": 307.4,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.84x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "WIPRO",
-    "asset_type": "Stock",
-    "score": 1.6,
-    "reasons": [
-      "Live Vol 0.82x avg"
-    ],
-    "price": 197.91,
-    "volume_spike": 0.82,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/WIPRO.NS",
-    "signal_reason": "Live Vol 0.82x avg",
-    "sectors": [
-      "IT",
-      "Nifty50",
-      "Nifty100"
-    ],
-    "openPrice": 198,
-    "dayHigh": 198.94,
-    "dayLow": 196.7,
-    "closePrice": 197.88,
-    "prevClose": 197.36,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.82x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "CIPLA",
-    "asset_type": "Stock",
-    "score": 1.4,
-    "reasons": [
-      "Live Vol 0.72x avg"
-    ],
-    "price": 1347,
-    "volume_spike": 0.72,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/CIPLA.NS",
-    "signal_reason": "Live Vol 0.72x avg",
-    "sectors": [
-      "Pharma",
-      "Nifty50",
-      "Nifty100"
-    ],
-    "openPrice": 1355,
-    "dayHigh": 1366.7,
-    "dayLow": 1341.3,
-    "closePrice": 1348,
-    "prevClose": 1362.3,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.72x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "INFY",
-    "asset_type": "Stock",
-    "score": 1.2,
-    "reasons": [
-      "Live Vol 0.62x avg"
-    ],
-    "price": 1179.2,
-    "volume_spike": 0.62,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/INFY.NS",
-    "signal_reason": "Live Vol 0.62x avg",
-    "sectors": [
-      "IT",
-      "Nifty50",
-      "Nifty100",
-      "Evergreen",
-      "Dividend"
-    ],
-    "openPrice": 1161,
-    "dayHigh": 1183.5,
-    "dayLow": 1158.8,
-    "closePrice": 1179.5,
-    "prevClose": 1162.7,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.62x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "AXISBANK",
-    "asset_type": "Stock",
-    "score": 1.2,
-    "reasons": [
-      "Live Vol 0.61x avg"
-    ],
-    "price": 1268.3,
-    "volume_spike": 0.61,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/AXISBANK.NS",
-    "signal_reason": "Live Vol 0.61x avg",
-    "sectors": [
-      "Private Banks",
-      "Nifty50",
-      "Nifty100"
-    ],
-    "openPrice": 1280,
-    "dayHigh": 1282,
-    "dayLow": 1264.6,
-    "closePrice": 1270,
-    "prevClose": 1292.7,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.61x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "HCLTECH",
-    "asset_type": "Stock",
-    "score": 1.2,
-    "reasons": [
-      "Live Vol 0.58x avg"
-    ],
-    "price": 1198.4,
-    "volume_spike": 0.58,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/HCLTECH.NS",
-    "signal_reason": "Live Vol 0.58x avg",
-    "sectors": [
-      "IT",
-      "Nifty50",
-      "Nifty100",
-      "Dividend"
-    ],
-    "openPrice": 1179.8,
-    "dayHigh": 1202.8,
-    "dayLow": 1176.8,
-    "closePrice": 1199,
-    "prevClose": 1183.4,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.58x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "TATASTEEL",
-    "asset_type": "Stock",
-    "score": 1.2,
-    "reasons": [
-      "Live Vol 0.6x avg"
-    ],
-    "price": 214.49,
-    "volume_spike": 0.6,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/TATASTEEL.NS",
-    "signal_reason": "Live Vol 0.6x avg",
-    "sectors": [
-      "Metal",
-      "Nifty50",
-      "Nifty100"
-    ],
-    "openPrice": 217,
-    "dayHigh": 217.4,
-    "dayLow": 214.25,
-    "closePrice": 214.6,
-    "prevClose": 217.09,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.6x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "HINDALCO",
-    "asset_type": "Stock",
-    "score": 1.2,
-    "reasons": [
-      "Live Vol 0.59x avg"
-    ],
-    "price": 1044.4,
-    "volume_spike": 0.59,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/HINDALCO.NS",
-    "signal_reason": "Live Vol 0.59x avg",
-    "sectors": [
-      "Metal",
-      "Nifty50",
-      "Nifty100"
-    ],
-    "openPrice": 1048.4,
-    "dayHigh": 1058,
-    "dayLow": 1035.3,
-    "closePrice": 1044.7,
-    "prevClose": 1055.7,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.59x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "ICICIBANK",
-    "asset_type": "Stock",
-    "score": 1.1,
-    "reasons": [
-      "Live Vol 0.57x avg"
-    ],
-    "price": 1264.8,
-    "volume_spike": 0.57,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/ICICIBANK.NS",
-    "signal_reason": "Live Vol 0.57x avg",
-    "sectors": [
-      "Private Banks",
-      "Nifty50",
-      "Nifty100"
-    ],
-    "openPrice": 1279.6,
-    "dayHigh": 1279.6,
-    "dayLow": 1261.2,
-    "closePrice": 1267.8,
-    "prevClose": 1279,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.57x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "KOTAKBANK",
-    "asset_type": "Stock",
-    "score": 1.1,
-    "reasons": [
-      "Live Vol 0.57x avg"
-    ],
-    "price": 380.8,
-    "volume_spike": 0.57,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/KOTAKBANK.NS",
-    "signal_reason": "Live Vol 0.57x avg",
-    "sectors": [
-      "Private Banks",
-      "Nifty50",
-      "Nifty100"
-    ],
-    "openPrice": 379,
-    "dayHigh": 381.5,
-    "dayLow": 374,
-    "closePrice": 381,
-    "prevClose": 379.4,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.57x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "HINDUNILVR",
-    "asset_type": "Stock",
-    "score": 1,
-    "reasons": [
-      "Live Vol 0.51x avg"
-    ],
-    "price": 2287.7,
-    "volume_spike": 0.51,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/HINDUNILVR.NS",
-    "signal_reason": "Live Vol 0.51x avg",
-    "sectors": [
-      "FMCG",
-      "Nifty50",
-      "Nifty100",
-      "Evergreen",
-      "Dividend"
-    ],
-    "openPrice": 2272.2,
-    "dayHigh": 2297.3,
-    "dayLow": 2256,
-    "closePrice": 2286,
-    "prevClose": 2272.2,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.51x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "BAJFINANCE",
-    "asset_type": "Stock",
-    "score": 1,
-    "reasons": [
-      "Live Vol 0.52x avg"
-    ],
-    "price": 955.35,
-    "volume_spike": 0.52,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/BAJFINANCE.NS",
-    "signal_reason": "Live Vol 0.52x avg",
-    "sectors": [
-      "NBFC",
-      "Nifty50",
-      "Nifty100",
-      "Evergreen"
-    ],
-    "openPrice": 971,
-    "dayHigh": 971.95,
-    "dayLow": 951,
-    "closePrice": 954.5,
-    "prevClose": 972.75,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.52x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "BHARTIARTL",
-    "asset_type": "Stock",
-    "score": 1,
-    "reasons": [
-      "Live Vol 0.5x avg"
-    ],
-    "price": 1834.5,
-    "volume_spike": 0.5,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/BHARTIARTL.NS",
-    "signal_reason": "Live Vol 0.5x avg",
-    "sectors": [
-      "Telecom",
-      "Nifty50",
-      "Nifty100"
-    ],
-    "openPrice": 1820,
-    "dayHigh": 1840.8,
-    "dayLow": 1815.2,
-    "closePrice": 1834.7,
-    "prevClose": 1826.6,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.5x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "DIVISLAB",
-    "asset_type": "Stock",
-    "score": 1,
-    "reasons": [
-      "Live Vol 0.48x avg"
-    ],
-    "price": 6710.5,
-    "volume_spike": 0.48,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/DIVISLAB.NS",
-    "signal_reason": "Live Vol 0.48x avg",
-    "sectors": [
-      "Pharma",
-      "Nifty50",
-      "Nifty100"
-    ],
-    "openPrice": 6700,
-    "dayHigh": 6759,
-    "dayLow": 6675,
-    "closePrice": 6705,
-    "prevClose": 6702.5,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.48x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "LT",
-    "asset_type": "Stock",
-    "score": 0.9,
-    "reasons": [
-      "Live Vol 0.44x avg"
-    ],
-    "price": 3974.5,
-    "volume_spike": 0.44,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/LT.NS",
-    "signal_reason": "Live Vol 0.44x avg",
-    "sectors": [
-      "Infra",
-      "Nifty50",
-      "Nifty100",
-      "Evergreen"
-    ],
-    "openPrice": 4010,
-    "dayHigh": 4014,
-    "dayLow": 3960,
-    "closePrice": 3978,
-    "prevClose": 4023,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.44x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "NTPC",
-    "asset_type": "Stock",
-    "score": 0.9,
-    "reasons": [
-      "Live Vol 0.45x avg"
-    ],
-    "price": 402.15,
-    "volume_spike": 0.45,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/NTPC.NS",
-    "signal_reason": "Live Vol 0.45x avg",
-    "sectors": [
-      "Power",
-      "Nifty50",
-      "Nifty100",
-      "PSU",
-      "Dividend"
-    ],
-    "openPrice": 398,
-    "dayHigh": 405.1,
-    "dayLow": 397.15,
-    "closePrice": 402.25,
-    "prevClose": 400.35,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.45x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "JSWSTEEL",
-    "asset_type": "Stock",
-    "score": 0.9,
-    "reasons": [
-      "Live Vol 0.44x avg"
-    ],
-    "price": 1277.8,
-    "volume_spike": 0.44,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/JSWSTEEL.NS",
-    "signal_reason": "Live Vol 0.44x avg",
-    "sectors": [
-      "Metal",
-      "Nifty50",
-      "Nifty100"
-    ],
-    "openPrice": 1283.4,
-    "dayHigh": 1284.9,
-    "dayLow": 1266.8,
-    "closePrice": 1277,
-    "prevClose": 1283.4,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.44x average — being tracked. 📊 Early stage signal — watch closely."
-  },
-  {
-    "symbol": "MARUTI",
-    "asset_type": "Stock",
-    "score": 0.8,
-    "reasons": [
-      "Live Vol 0.42x avg"
-    ],
-    "price": 13726,
-    "volume_spike": 0.42,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://finance.yahoo.com/quote/MARUTI.NS",
-    "signal_reason": "Live Vol 0.42x avg",
-    "sectors": [
-      "Auto",
-      "Nifty50",
-      "Nifty100",
-      "Evergreen"
-    ],
-    "openPrice": 13672,
-    "dayHigh": 13789,
-    "dayLow": 13626,
-    "closePrice": 13722,
-    "prevClose": 13770,
-    "week52High": null,
-    "week52Low": null,
-    "explanation": "Volume is 0.42x average — being tracked. 📊 Early stage signal — watch closely."
-  }
-]
+{
+  "signals": [
+    {
+      "symbol": "TITAN",
+      "asset_type": "Stock",
+      "score": 10.3,
+      "reasons": [
+        "🔥 Live Vol 2.03x avg"
+      ],
+      "price": 4208,
+      "volume_spike": 2.03,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=TITAN",
+      "signal_reason": "🔥 Live Vol 2.03x avg",
+      "sectors": [
+        "Consumer",
+        "Nifty50",
+        "Nifty100",
+        "Evergreen"
+      ],
+      "openPrice": 4350.4,
+      "dayHigh": 4379.5,
+      "dayLow": 4150.1,
+      "closePrice": 4227.8,
+      "prevClose": 4509,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 2.03x normal — strong interest today. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "SBIN",
+      "asset_type": "Stock",
+      "score": 2.2,
+      "reasons": [
+        "Live Vol 1.08x avg"
+      ],
+      "price": 977.7,
+      "volume_spike": 1.08,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=SBIN",
+      "signal_reason": "Live Vol 1.08x avg",
+      "sectors": [
+        "PSU Banks",
+        "Nifty50",
+        "Nifty100"
+      ],
+      "openPrice": 1007,
+      "dayHigh": 1007,
+      "dayLow": 975.8,
+      "closePrice": 977.7,
+      "prevClose": 1019.3,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 1.08x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "BHARTIARTL",
+      "asset_type": "Stock",
+      "score": 1.2,
+      "reasons": [
+        "Live Vol 0.59x avg"
+      ],
+      "price": 1765.3,
+      "volume_spike": 0.59,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=BHARTIARTL",
+      "signal_reason": "Live Vol 0.59x avg",
+      "sectors": [
+        "Telecom",
+        "Nifty50",
+        "Nifty100"
+      ],
+      "openPrice": 1814,
+      "dayHigh": 1819.8,
+      "dayLow": 1757.2,
+      "closePrice": 1765.6,
+      "prevClose": 1834.5,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.59x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "APOLLOHOSP",
+      "asset_type": "Stock",
+      "score": 1,
+      "reasons": [
+        "Live Vol 0.5x avg"
+      ],
+      "price": 8100,
+      "volume_spike": 0.5,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=APOLLOHOSP",
+      "signal_reason": "Live Vol 0.5x avg",
+      "sectors": [
+        "Pharma",
+        "Nifty50",
+        "Nifty100"
+      ],
+      "openPrice": 8046,
+      "dayHigh": 8144,
+      "dayLow": 8022.5,
+      "closePrice": 8105,
+      "prevClose": 8097,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.5x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "ASIANPAINT",
+      "asset_type": "Stock",
+      "score": 0.8,
+      "reasons": [
+        "Live Vol 0.38x avg"
+      ],
+      "price": 2569.9,
+      "volume_spike": 0.38,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=ASIANPAINT",
+      "signal_reason": "Live Vol 0.38x avg",
+      "sectors": [
+        "Paint",
+        "Nifty50",
+        "Nifty100",
+        "Evergreen"
+      ],
+      "openPrice": 2578.9,
+      "dayHigh": 2598.4,
+      "dayLow": 2557,
+      "closePrice": 2573.2,
+      "prevClose": 2599.9,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.38x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "MARUTI",
+      "asset_type": "Stock",
+      "score": 0.8,
+      "reasons": [
+        "Live Vol 0.38x avg"
+      ],
+      "price": 13621,
+      "volume_spike": 0.38,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=MARUTI",
+      "signal_reason": "Live Vol 0.38x avg",
+      "sectors": [
+        "Auto",
+        "Nifty50",
+        "Nifty100",
+        "Evergreen"
+      ],
+      "openPrice": 13547,
+      "dayHigh": 13657,
+      "dayLow": 13231,
+      "closePrice": 13625,
+      "prevClose": 13726,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.38x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "DIVISLAB",
+      "asset_type": "Stock",
+      "score": 0.6,
+      "reasons": [
+        "Live Vol 0.28x avg"
+      ],
+      "price": 6759,
+      "volume_spike": 0.28,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=DIVISLAB",
+      "signal_reason": "Live Vol 0.28x avg",
+      "sectors": [
+        "Pharma",
+        "Nifty50",
+        "Nifty100"
+      ],
+      "openPrice": 6700,
+      "dayHigh": 6785,
+      "dayLow": 6650,
+      "closePrice": 6758.5,
+      "prevClose": 6710.5,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.28x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "HINDALCO",
+      "asset_type": "Stock",
+      "score": 0.6,
+      "reasons": [
+        "Live Vol 0.32x avg"
+      ],
+      "price": 1035.2,
+      "volume_spike": 0.32,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=HINDALCO",
+      "signal_reason": "Live Vol 0.32x avg",
+      "sectors": [
+        "Metal",
+        "Nifty50",
+        "Nifty100"
+      ],
+      "openPrice": 1031.1,
+      "dayHigh": 1042.4,
+      "dayLow": 1030.1,
+      "closePrice": 1035.2,
+      "prevClose": 1044.4,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.32x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "HDFCBANK",
+      "asset_type": "Stock",
+      "score": 0.5,
+      "reasons": [
+        "Live Vol 0.23x avg"
+      ],
+      "price": 769.8,
+      "volume_spike": 0.23,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=HDFCBANK",
+      "signal_reason": "Live Vol 0.23x avg",
+      "sectors": [
+        "Private Banks",
+        "Nifty50",
+        "Nifty100"
+      ],
+      "openPrice": 771.95,
+      "dayHigh": 774.85,
+      "dayLow": 767.05,
+      "closePrice": 769.75,
+      "prevClose": 780.85,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.23x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "ITC",
+      "asset_type": "Stock",
+      "score": 0.5,
+      "reasons": [
+        "Live Vol 0.23x avg"
+      ],
+      "price": 306.95,
+      "volume_spike": 0.23,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=ITC",
+      "signal_reason": "Live Vol 0.23x avg",
+      "sectors": [
+        "FMCG",
+        "Nifty50",
+        "Nifty100",
+        "Dividend"
+      ],
+      "openPrice": 307,
+      "dayHigh": 308,
+      "dayLow": 305.15,
+      "closePrice": 307,
+      "prevClose": 307.45,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.23x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "LT",
+      "asset_type": "Stock",
+      "score": 0.5,
+      "reasons": [
+        "Live Vol 0.27x avg"
+      ],
+      "price": 3903,
+      "volume_spike": 0.27,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=LT",
+      "signal_reason": "Live Vol 0.27x avg",
+      "sectors": [
+        "Infra",
+        "Nifty50",
+        "Nifty100",
+        "Evergreen"
+      ],
+      "openPrice": 3948,
+      "dayHigh": 3948,
+      "dayLow": 3886.1,
+      "closePrice": 3904.7,
+      "prevClose": 3974.5,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.27x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": [
+        {
+          "date": "2026-05-21",
+          "amount": 38,
+          "status": "upcoming",
+          "source": "nse_corporate_actions",
+          "note": "Dividend - Rs 38 Per Share"
+        }
+      ]
+    },
+    {
+      "symbol": "HCLTECH",
+      "asset_type": "Stock",
+      "score": 0.5,
+      "reasons": [
+        "Live Vol 0.23x avg"
+      ],
+      "price": 1204.1,
+      "volume_spike": 0.23,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=HCLTECH",
+      "signal_reason": "Live Vol 0.23x avg",
+      "sectors": [
+        "IT",
+        "Nifty50",
+        "Nifty100",
+        "Dividend"
+      ],
+      "openPrice": 1196.9,
+      "dayHigh": 1206.3,
+      "dayLow": 1191.1,
+      "closePrice": 1204.4,
+      "prevClose": 1198.4,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.23x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "NTPC",
+      "asset_type": "Stock",
+      "score": 0.5,
+      "reasons": [
+        "Live Vol 0.23x avg"
+      ],
+      "price": 402.45,
+      "volume_spike": 0.23,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=NTPC",
+      "signal_reason": "Live Vol 0.23x avg",
+      "sectors": [
+        "Power",
+        "Nifty50",
+        "Nifty100",
+        "PSU",
+        "Dividend"
+      ],
+      "openPrice": 401.9,
+      "dayHigh": 405,
+      "dayLow": 399.2,
+      "closePrice": 402.75,
+      "prevClose": 402.15,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.23x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "TATASTEEL",
+      "asset_type": "Stock",
+      "score": 0.5,
+      "reasons": [
+        "Live Vol 0.24x avg"
+      ],
+      "price": 213.8,
+      "volume_spike": 0.24,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=TATASTEEL",
+      "signal_reason": "Live Vol 0.24x avg",
+      "sectors": [
+        "Metal",
+        "Nifty50",
+        "Nifty100"
+      ],
+      "openPrice": 213.5,
+      "dayHigh": 215,
+      "dayLow": 211.52,
+      "closePrice": 213.84,
+      "prevClose": 214.49,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.24x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "INFY",
+      "asset_type": "Stock",
+      "score": 0.4,
+      "reasons": [
+        "Live Vol 0.18x avg"
+      ],
+      "price": 1183.6,
+      "volume_spike": 0.18,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=INFY",
+      "signal_reason": "Live Vol 0.18x avg",
+      "sectors": [
+        "IT",
+        "Nifty50",
+        "Nifty100",
+        "Evergreen",
+        "Dividend"
+      ],
+      "openPrice": 1176,
+      "dayHigh": 1184.9,
+      "dayLow": 1172.1,
+      "closePrice": 1184.3,
+      "prevClose": 1179.2,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.18x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "ICICIBANK",
+      "asset_type": "Stock",
+      "score": 0.4,
+      "reasons": [
+        "Live Vol 0.22x avg"
+      ],
+      "price": 1265.9,
+      "volume_spike": 0.22,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=ICICIBANK",
+      "signal_reason": "Live Vol 0.22x avg",
+      "sectors": [
+        "Private Banks",
+        "Nifty50",
+        "Nifty100"
+      ],
+      "openPrice": 1259.4,
+      "dayHigh": 1266.2,
+      "dayLow": 1252,
+      "closePrice": 1265.8,
+      "prevClose": 1264.8,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.22x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "WIPRO",
+      "asset_type": "Stock",
+      "score": 0.4,
+      "reasons": [
+        "Live Vol 0.19x avg"
+      ],
+      "price": 197.95,
+      "volume_spike": 0.19,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=WIPRO",
+      "signal_reason": "Live Vol 0.19x avg",
+      "sectors": [
+        "IT",
+        "Nifty50",
+        "Nifty100"
+      ],
+      "openPrice": 197.88,
+      "dayHigh": 198.24,
+      "dayLow": 196.75,
+      "closePrice": 197.93,
+      "prevClose": 197.91,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.19x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "ADANIENT",
+      "asset_type": "Stock",
+      "score": 0.4,
+      "reasons": [
+        "Live Vol 0.19x avg"
+      ],
+      "price": 2483.6,
+      "volume_spike": 0.19,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=ADANIENT",
+      "signal_reason": "Live Vol 0.19x avg",
+      "sectors": [
+        "Infra",
+        "Nifty50",
+        "Nifty100"
+      ],
+      "openPrice": 2495,
+      "dayHigh": 2495,
+      "dayLow": 2460,
+      "closePrice": 2484,
+      "prevClose": 2505.9,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.19x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "COALINDIA",
+      "asset_type": "Stock",
+      "score": 0.4,
+      "reasons": [
+        "Live Vol 0.18x avg"
+      ],
+      "price": 462.3,
+      "volume_spike": 0.18,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=COALINDIA",
+      "signal_reason": "Live Vol 0.18x avg",
+      "sectors": [
+        "Metal",
+        "Nifty50",
+        "Nifty100",
+        "PSU",
+        "Dividend"
+      ],
+      "openPrice": 456,
+      "dayHigh": 463.1,
+      "dayLow": 452.85,
+      "closePrice": 462.4,
+      "prevClose": 456.4,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.18x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "DRREDDY",
+      "asset_type": "Stock",
+      "score": 0.4,
+      "reasons": [
+        "Live Vol 0.2x avg"
+      ],
+      "price": 1287.5,
+      "volume_spike": 0.2,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=DRREDDY",
+      "signal_reason": "Live Vol 0.2x avg",
+      "sectors": [
+        "Pharma",
+        "Nifty50",
+        "Nifty100"
+      ],
+      "openPrice": 1288,
+      "dayHigh": 1292,
+      "dayLow": 1272.5,
+      "closePrice": 1287.7,
+      "prevClose": 1293.9,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.2x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "CIPLA",
+      "asset_type": "Stock",
+      "score": 0.4,
+      "reasons": [
+        "Live Vol 0.18x avg"
+      ],
+      "price": 1341.4,
+      "volume_spike": 0.18,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=CIPLA",
+      "signal_reason": "Live Vol 0.18x avg",
+      "sectors": [
+        "Pharma",
+        "Nifty50",
+        "Nifty100"
+      ],
+      "openPrice": 1347,
+      "dayHigh": 1350,
+      "dayLow": 1330.5,
+      "closePrice": 1341.4,
+      "prevClose": 1347,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.18x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "RELIANCE",
+      "asset_type": "Stock",
+      "score": 0.3,
+      "reasons": [
+        "Live Vol 0.13x avg"
+      ],
+      "price": 1419.2,
+      "volume_spike": 0.13,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=RELIANCE",
+      "signal_reason": "Live Vol 0.13x avg",
+      "sectors": [
+        "Petroleum",
+        "Nifty50",
+        "Nifty100",
+        "Evergreen",
+        "Dividend"
+      ],
+      "openPrice": 1420,
+      "dayHigh": 1428,
+      "dayLow": 1414,
+      "closePrice": 1419.3,
+      "prevClose": 1435.2,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.13x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "TCS",
+      "asset_type": "Stock",
+      "score": 0.3,
+      "reasons": [
+        "Live Vol 0.16x avg"
+      ],
+      "price": 2408,
+      "volume_spike": 0.16,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=TCS",
+      "signal_reason": "Live Vol 0.16x avg",
+      "sectors": [
+        "IT",
+        "Nifty50",
+        "Nifty100",
+        "Evergreen",
+        "Dividend"
+      ],
+      "openPrice": 2371,
+      "dayHigh": 2410,
+      "dayLow": 2371,
+      "closePrice": 2408.9,
+      "prevClose": 2394.4,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.16x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": [
+        {
+          "date": "2026-05-24",
+          "amount": 31,
+          "status": "upcoming",
+          "source": "nse_corporate_actions",
+          "note": "Dividend - Rs 31 Per Share"
+        }
+      ]
+    },
+    {
+      "symbol": "BAJFINANCE",
+      "asset_type": "Stock",
+      "score": 0.3,
+      "reasons": [
+        "Live Vol 0.17x avg"
+      ],
+      "price": 944.4,
+      "volume_spike": 0.17,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=BAJFINANCE",
+      "signal_reason": "Live Vol 0.17x avg",
+      "sectors": [
+        "NBFC",
+        "Nifty50",
+        "Nifty100",
+        "Evergreen"
+      ],
+      "openPrice": 946,
+      "dayHigh": 951.95,
+      "dayLow": 941,
+      "closePrice": 944.75,
+      "prevClose": 955.35,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.17x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    },
+    {
+      "symbol": "KOTAKBANK",
+      "asset_type": "Stock",
+      "score": 0.3,
+      "reasons": [
+        "Live Vol 0.17x avg"
+      ],
+      "price": 380.3,
+      "volume_spike": 0.17,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/get-quotes/equity?symbol=KOTAKBANK",
+      "signal_reason": "Live Vol 0.17x avg",
+      "sectors": [
+        "Private Banks",
+        "Nifty50",
+        "Nifty100"
+      ],
+      "openPrice": 376.1,
+      "dayHigh": 380.65,
+      "dayLow": 374.4,
+      "closePrice": 380.4,
+      "prevClose": 380.8,
+      "week52High": null,
+      "week52Low": null,
+      "explanation": "Volume is 0.17x average — being tracked. 📊 Early stage signal — watch closely.",
+      "dividends": []
+    }
+  ],
+  "generatedAt": "2026-05-11T05:42:58.650Z",
+  "count": 25
+}

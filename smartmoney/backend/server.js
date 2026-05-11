@@ -1724,6 +1724,7 @@ app.get("/api/options", async (req, res) => {
     const staleCache = getOptionsCacheAgeMs() > 5 * 60 * 1000; // 5 min for options
     
     let options = readOptions();
+    const cachedOptions = Array.isArray(options) ? [...options] : [];
     if (options.length > 0 && !("atmCall" in options[0])) {
       options = [];
     }
@@ -1789,12 +1790,23 @@ app.get("/api/options", async (req, res) => {
         }
       }
 
+      if (options.length === 0 && cachedOptions.length > 0) {
+        options = cachedOptions;
+        source = "cache";
+        notes.push(`Live rebuild returned empty. Serving ${cachedOptions.length} cached FnO rows instead.`);
+      }
+
       topCalls = rankOptionContracts(chains.flatMap((c) => c.calls || []), limit);
       topPuts = rankOptionContracts(chains.flatMap((c) => c.puts || []), limit);
 
       writeOptions(options);
       } catch (optErr) {
         console.error("Error rebuilding options:", optErr.message);
+        if (cachedOptions.length > 0) {
+          options = cachedOptions;
+          source = "cache";
+          notes.push(`Live rebuild failed. Serving ${cachedOptions.length} cached FnO rows instead.`);
+        }
         notes.push(`Error building options: ${optErr.message}`);
       }
     } else {

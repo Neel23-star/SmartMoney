@@ -1,662 +1,666 @@
-[
-  {
-    "symbol": "LT",
-    "asset_type": "FnO",
-    "score": 20,
-    "reasons": [
-      "🐻 PCR 0.55 — Strong Bearish (heavy Call writing)",
-      "Call OI building — resistance at ₹4200"
-    ],
-    "signal_reason": "🐻 PCR 0.55 — Strong Bearish (heavy Call writing) | Call OI building — resistance at ₹4200",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.55,
-    "sentiment": "Bearish",
-    "topCallStrike": 4200,
-    "topPutStrike": 3900,
-    "totalCallOI": 9391025,
-    "totalPutOI": 5158475,
-    "callOIChange": 770875,
-    "putOIChange": 183050,
-    "underlyingPrice": null,
-    "expiry": "2026-05-26",
-    "atmCall": {
-      "strike": 4040,
-      "premium": 144,
-      "iv": null,
-      "openInterest": 1750,
-      "volume": 0
+{
+  "options": [
+    {
+      "symbol": "LT",
+      "asset_type": "FnO",
+      "score": 20,
+      "reasons": [
+        "🐻 PCR 0.55 — Strong Bearish (heavy Call writing)",
+        "Call OI building — resistance at ₹4200"
+      ],
+      "signal_reason": "🐻 PCR 0.55 — Strong Bearish (heavy Call writing) | Call OI building — resistance at ₹4200",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.55,
+      "sentiment": "Bearish",
+      "topCallStrike": 4200,
+      "topPutStrike": 3900,
+      "totalCallOI": 9391025,
+      "totalPutOI": 5158475,
+      "callOIChange": 770875,
+      "putOIChange": 183050,
+      "underlyingPrice": null,
+      "expiry": "2026-05-26",
+      "atmCall": {
+        "strike": 4040,
+        "premium": 144,
+        "iv": null,
+        "openInterest": 1750,
+        "volume": 0
+      },
+      "atmPut": {
+        "strike": 4040,
+        "premium": 143.05,
+        "iv": null,
+        "openInterest": 99225,
+        "volume": 566
+      }
     },
-    "atmPut": {
-      "strike": 4040,
-      "premium": 143.05,
-      "iv": null,
-      "openInterest": 99225,
-      "volume": 566
-    }
-  },
-  {
-    "symbol": "BHARTIARTL",
-    "asset_type": "FnO",
-    "score": 20,
-    "reasons": [
-      "🐻 PCR 0.53 — Strong Bearish (heavy Call writing)",
-      "Put OI building — support at ₹1840"
-    ],
-    "signal_reason": "🐻 PCR 0.53 — Strong Bearish (heavy Call writing) | Put OI building — support at ₹1840",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.53,
-    "sentiment": "Bearish",
-    "topCallStrike": 1900,
-    "topPutStrike": 1840,
-    "totalCallOI": 14886500,
-    "totalPutOI": 7824200,
-    "callOIChange": 294025,
-    "putOIChange": 324425,
-    "underlyingPrice": null,
-    "expiry": "2026-06-30",
-    "atmCall": {
-      "strike": 1880,
-      "premium": 84.1,
-      "iv": null,
-      "openInterest": 475,
-      "volume": 0
+    {
+      "symbol": "BHARTIARTL",
+      "asset_type": "FnO",
+      "score": 20,
+      "reasons": [
+        "🐻 PCR 0.53 — Strong Bearish (heavy Call writing)",
+        "Put OI building — support at ₹1840"
+      ],
+      "signal_reason": "🐻 PCR 0.53 — Strong Bearish (heavy Call writing) | Put OI building — support at ₹1840",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.53,
+      "sentiment": "Bearish",
+      "topCallStrike": 1900,
+      "topPutStrike": 1840,
+      "totalCallOI": 14886500,
+      "totalPutOI": 7824200,
+      "callOIChange": 294025,
+      "putOIChange": 324425,
+      "underlyingPrice": null,
+      "expiry": "2026-06-30",
+      "atmCall": {
+        "strike": 1880,
+        "premium": 84.1,
+        "iv": null,
+        "openInterest": 475,
+        "volume": 0
+      },
+      "atmPut": {
+        "strike": 1880,
+        "premium": 50,
+        "iv": null,
+        "openInterest": 1900,
+        "volume": 0
+      }
     },
-    "atmPut": {
-      "strike": 1880,
-      "premium": 50,
-      "iv": null,
-      "openInterest": 1900,
-      "volume": 0
-    }
-  },
-  {
-    "symbol": "SBIN",
-    "asset_type": "FnO",
-    "score": 20,
-    "reasons": [
-      "🐻 PCR 0.44 — Strong Bearish (heavy Call writing)",
-      "Call OI building — resistance at ₹1100"
-    ],
-    "signal_reason": "🐻 PCR 0.44 — Strong Bearish (heavy Call writing) | Call OI building — resistance at ₹1100",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.44,
-    "sentiment": "Bearish",
-    "topCallStrike": 1100,
-    "topPutStrike": 1000,
-    "totalCallOI": 115450500,
-    "totalPutOI": 50632500,
-    "callOIChange": 77163750,
-    "putOIChange": 23796000,
-    "underlyingPrice": null,
-    "expiry": "2026-05-26",
-    "atmCall": {
-      "strike": 1050,
-      "premium": 28.65,
-      "iv": null,
-      "openInterest": 279000,
-      "volume": 862
+    {
+      "symbol": "SBIN",
+      "asset_type": "FnO",
+      "score": 20,
+      "reasons": [
+        "🐻 PCR 0.44 — Strong Bearish (heavy Call writing)",
+        "Call OI building — resistance at ₹1100"
+      ],
+      "signal_reason": "🐻 PCR 0.44 — Strong Bearish (heavy Call writing) | Call OI building — resistance at ₹1100",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.44,
+      "sentiment": "Bearish",
+      "topCallStrike": 1100,
+      "topPutStrike": 1000,
+      "totalCallOI": 115450500,
+      "totalPutOI": 50632500,
+      "callOIChange": 77163750,
+      "putOIChange": 23796000,
+      "underlyingPrice": null,
+      "expiry": "2026-05-26",
+      "atmCall": {
+        "strike": 1050,
+        "premium": 28.65,
+        "iv": null,
+        "openInterest": 279000,
+        "volume": 862
+      },
+      "atmPut": {
+        "strike": 1050,
+        "premium": 59.15,
+        "iv": null,
+        "openInterest": 2408250,
+        "volume": 17457
+      }
     },
-    "atmPut": {
-      "strike": 1050,
-      "premium": 59.15,
-      "iv": null,
-      "openInterest": 2408250,
-      "volume": 17457
-    }
-  },
-  {
-    "symbol": "ICICIBANK",
-    "asset_type": "FnO",
-    "score": 20,
-    "reasons": [
-      "🐻 PCR 0.58 — Strong Bearish (heavy Call writing)",
-      "Call OI building — resistance at ₹1300"
-    ],
-    "signal_reason": "🐻 PCR 0.58 — Strong Bearish (heavy Call writing) | Call OI building — resistance at ₹1300",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.58,
-    "sentiment": "Bearish",
-    "topCallStrike": 1300,
-    "topPutStrike": 1300,
-    "totalCallOI": 39057900,
-    "totalPutOI": 22564500,
-    "callOIChange": 3143700,
-    "putOIChange": 1157800,
-    "underlyingPrice": null,
-    "expiry": "2026-05-26",
-    "atmCall": {
-      "strike": 1300,
-      "premium": 11.6,
-      "iv": null,
-      "openInterest": 5597200,
-      "volume": 6670
+    {
+      "symbol": "ICICIBANK",
+      "asset_type": "FnO",
+      "score": 20,
+      "reasons": [
+        "🐻 PCR 0.58 — Strong Bearish (heavy Call writing)",
+        "Call OI building — resistance at ₹1300"
+      ],
+      "signal_reason": "🐻 PCR 0.58 — Strong Bearish (heavy Call writing) | Call OI building — resistance at ₹1300",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.58,
+      "sentiment": "Bearish",
+      "topCallStrike": 1300,
+      "topPutStrike": 1300,
+      "totalCallOI": 39057900,
+      "totalPutOI": 22564500,
+      "callOIChange": 3143700,
+      "putOIChange": 1157800,
+      "underlyingPrice": null,
+      "expiry": "2026-05-26",
+      "atmCall": {
+        "strike": 1300,
+        "premium": 11.6,
+        "iv": null,
+        "openInterest": 5597200,
+        "volume": 6670
+      },
+      "atmPut": {
+        "strike": 1300,
+        "premium": 60,
+        "iv": null,
+        "openInterest": 1400,
+        "volume": 0
+      }
     },
-    "atmPut": {
-      "strike": 1300,
-      "premium": 60,
-      "iv": null,
-      "openInterest": 1400,
-      "volume": 0
-    }
-  },
-  {
-    "symbol": "INFY",
-    "asset_type": "FnO",
-    "score": 20,
-    "reasons": [
-      "🐻 PCR 0.59 — Strong Bearish (heavy Call writing)",
-      "Put OI building — support at ₹1100"
-    ],
-    "signal_reason": "🐻 PCR 0.59 — Strong Bearish (heavy Call writing) | Put OI building — support at ₹1100",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.59,
-    "sentiment": "Bearish",
-    "topCallStrike": 1200,
-    "topPutStrike": 1100,
-    "totalCallOI": 40067200,
-    "totalPutOI": 23550800,
-    "callOIChange": -1022000,
-    "putOIChange": 418800,
-    "underlyingPrice": null,
-    "expiry": "2026-06-30",
-    "atmCall": {
-      "strike": 1150,
-      "premium": 65.45,
-      "iv": null,
-      "openInterest": 92800,
-      "volume": 272
+    {
+      "symbol": "INFY",
+      "asset_type": "FnO",
+      "score": 20,
+      "reasons": [
+        "🐻 PCR 0.59 — Strong Bearish (heavy Call writing)",
+        "Put OI building — support at ₹1100"
+      ],
+      "signal_reason": "🐻 PCR 0.59 — Strong Bearish (heavy Call writing) | Put OI building — support at ₹1100",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.59,
+      "sentiment": "Bearish",
+      "topCallStrike": 1200,
+      "topPutStrike": 1100,
+      "totalCallOI": 40067200,
+      "totalPutOI": 23550800,
+      "callOIChange": -1022000,
+      "putOIChange": 418800,
+      "underlyingPrice": null,
+      "expiry": "2026-06-30",
+      "atmCall": {
+        "strike": 1150,
+        "premium": 65.45,
+        "iv": null,
+        "openInterest": 92800,
+        "volume": 272
+      },
+      "atmPut": {
+        "strike": 1150,
+        "premium": 15.75,
+        "iv": null,
+        "openInterest": 1309600,
+        "volume": 2482
+      }
     },
-    "atmPut": {
-      "strike": 1150,
-      "premium": 15.75,
-      "iv": null,
-      "openInterest": 1309600,
-      "volume": 2482
-    }
-  },
-  {
-    "symbol": "HDFCBANK",
-    "asset_type": "FnO",
-    "score": 20,
-    "reasons": [
-      "🐻 PCR 0.54 — Strong Bearish (heavy Call writing)",
-      "Call OI building — resistance at ₹800"
-    ],
-    "signal_reason": "🐻 PCR 0.54 — Strong Bearish (heavy Call writing) | Call OI building — resistance at ₹800",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.54,
-    "sentiment": "Bearish",
-    "topCallStrike": 800,
-    "topPutStrike": 800,
-    "totalCallOI": 83711950,
-    "totalPutOI": 45558950,
-    "callOIChange": 9513200,
-    "putOIChange": 1336850,
-    "underlyingPrice": null,
-    "expiry": "2026-06-30",
-    "atmCall": {
-      "strike": 800,
-      "premium": 10.85,
-      "iv": null,
-      "openInterest": 17035150,
-      "volume": 20928
+    {
+      "symbol": "HDFCBANK",
+      "asset_type": "FnO",
+      "score": 20,
+      "reasons": [
+        "🐻 PCR 0.54 — Strong Bearish (heavy Call writing)",
+        "Call OI building — resistance at ₹800"
+      ],
+      "signal_reason": "🐻 PCR 0.54 — Strong Bearish (heavy Call writing) | Call OI building — resistance at ₹800",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.54,
+      "sentiment": "Bearish",
+      "topCallStrike": 800,
+      "topPutStrike": 800,
+      "totalCallOI": 83711950,
+      "totalPutOI": 45558950,
+      "callOIChange": 9513200,
+      "putOIChange": 1336850,
+      "underlyingPrice": null,
+      "expiry": "2026-06-30",
+      "atmCall": {
+        "strike": 800,
+        "premium": 10.85,
+        "iv": null,
+        "openInterest": 17035150,
+        "volume": 20928
+      },
+      "atmPut": {
+        "strike": 800,
+        "premium": 45,
+        "iv": null,
+        "openInterest": 9750,
+        "volume": 5
+      }
     },
-    "atmPut": {
-      "strike": 800,
-      "premium": 45,
-      "iv": null,
-      "openInterest": 9750,
-      "volume": 5
-    }
-  },
-  {
-    "symbol": "HCLTECH",
-    "asset_type": "FnO",
-    "score": 15,
-    "reasons": [
-      "🐻 PCR 0.49 — Strong Bearish (heavy Call writing)"
-    ],
-    "signal_reason": "🐻 PCR 0.49 — Strong Bearish (heavy Call writing)",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.49,
-    "sentiment": "Bearish",
-    "topCallStrike": 1300,
-    "topPutStrike": 1200,
-    "totalCallOI": 23940750,
-    "totalPutOI": 11689350,
-    "callOIChange": -1453550,
-    "putOIChange": -155750,
-    "underlyingPrice": null,
-    "expiry": "2026-05-26",
-    "atmCall": {
-      "strike": 1250,
-      "premium": 11.75,
-      "iv": null,
-      "openInterest": 918750,
-      "volume": 2820
+    {
+      "symbol": "HCLTECH",
+      "asset_type": "FnO",
+      "score": 15,
+      "reasons": [
+        "🐻 PCR 0.49 — Strong Bearish (heavy Call writing)"
+      ],
+      "signal_reason": "🐻 PCR 0.49 — Strong Bearish (heavy Call writing)",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.49,
+      "sentiment": "Bearish",
+      "topCallStrike": 1300,
+      "topPutStrike": 1200,
+      "totalCallOI": 23940750,
+      "totalPutOI": 11689350,
+      "callOIChange": -1453550,
+      "putOIChange": -155750,
+      "underlyingPrice": null,
+      "expiry": "2026-05-26",
+      "atmCall": {
+        "strike": 1250,
+        "premium": 11.75,
+        "iv": null,
+        "openInterest": 918750,
+        "volume": 2820
+      },
+      "atmPut": {
+        "strike": 1250,
+        "premium": 91.2,
+        "iv": null,
+        "openInterest": 0,
+        "volume": 0
+      }
     },
-    "atmPut": {
-      "strike": 1250,
-      "premium": 91.2,
-      "iv": null,
-      "openInterest": 0,
-      "volume": 0
-    }
-  },
-  {
-    "symbol": "ONGC",
-    "asset_type": "FnO",
-    "score": 15,
-    "reasons": [
-      "🐻 PCR 0.33 — Strong Bearish (heavy Call writing)"
-    ],
-    "signal_reason": "🐻 PCR 0.33 — Strong Bearish (heavy Call writing)",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.33,
-    "sentiment": "Bearish",
-    "topCallStrike": 300,
-    "topPutStrike": 280,
-    "totalCallOI": 55656000,
-    "totalPutOI": 18209250,
-    "callOIChange": -697500,
-    "putOIChange": -166500,
-    "underlyingPrice": null,
-    "expiry": "2026-06-30",
-    "atmCall": {
-      "strike": 290,
-      "premium": 27.45,
-      "iv": null,
-      "openInterest": 0,
-      "volume": 0
+    {
+      "symbol": "ONGC",
+      "asset_type": "FnO",
+      "score": 15,
+      "reasons": [
+        "🐻 PCR 0.33 — Strong Bearish (heavy Call writing)"
+      ],
+      "signal_reason": "🐻 PCR 0.33 — Strong Bearish (heavy Call writing)",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.33,
+      "sentiment": "Bearish",
+      "topCallStrike": 300,
+      "topPutStrike": 280,
+      "totalCallOI": 55656000,
+      "totalPutOI": 18209250,
+      "callOIChange": -697500,
+      "putOIChange": -166500,
+      "underlyingPrice": null,
+      "expiry": "2026-06-30",
+      "atmCall": {
+        "strike": 290,
+        "premium": 27.45,
+        "iv": null,
+        "openInterest": 0,
+        "volume": 0
+      },
+      "atmPut": {
+        "strike": 290,
+        "premium": 12.4,
+        "iv": null,
+        "openInterest": 1964250,
+        "volume": 188
+      }
     },
-    "atmPut": {
-      "strike": 290,
-      "premium": 12.4,
-      "iv": null,
-      "openInterest": 1964250,
-      "volume": 188
-    }
-  },
-  {
-    "symbol": "WIPRO",
-    "asset_type": "FnO",
-    "score": 15,
-    "reasons": [
-      "🐻 PCR 0.51 — Strong Bearish (heavy Call writing)"
-    ],
-    "signal_reason": "🐻 PCR 0.51 — Strong Bearish (heavy Call writing)",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.51,
-    "sentiment": "Bearish",
-    "topCallStrike": 210,
-    "topPutStrike": 200,
-    "totalCallOI": 138168000,
-    "totalPutOI": 71025000,
-    "callOIChange": -2466000,
-    "putOIChange": -285000,
-    "underlyingPrice": null,
-    "expiry": "2026-06-30",
-    "atmCall": {
-      "strike": 205,
-      "premium": 1.77,
-      "iv": null,
-      "openInterest": 13650000,
-      "volume": 2352
+    {
+      "symbol": "WIPRO",
+      "asset_type": "FnO",
+      "score": 15,
+      "reasons": [
+        "🐻 PCR 0.51 — Strong Bearish (heavy Call writing)"
+      ],
+      "signal_reason": "🐻 PCR 0.51 — Strong Bearish (heavy Call writing)",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.51,
+      "sentiment": "Bearish",
+      "topCallStrike": 210,
+      "topPutStrike": 200,
+      "totalCallOI": 138168000,
+      "totalPutOI": 71025000,
+      "callOIChange": -2466000,
+      "putOIChange": -285000,
+      "underlyingPrice": null,
+      "expiry": "2026-06-30",
+      "atmCall": {
+        "strike": 205,
+        "premium": 1.77,
+        "iv": null,
+        "openInterest": 13650000,
+        "volume": 2352
+      },
+      "atmPut": {
+        "strike": 205,
+        "premium": 10.18,
+        "iv": null,
+        "openInterest": 2274000,
+        "volume": 46
+      }
     },
-    "atmPut": {
-      "strike": 205,
-      "premium": 10.18,
-      "iv": null,
-      "openInterest": 2274000,
-      "volume": 46
-    }
-  },
-  {
-    "symbol": "TATASTEEL",
-    "asset_type": "FnO",
-    "score": 13,
-    "reasons": [
-      "📉 PCR 0.72 — Bearish bias",
-      "Call OI building — resistance at ₹210"
-    ],
-    "signal_reason": "📉 PCR 0.72 — Bearish bias | Call OI building — resistance at ₹210",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.72,
-    "sentiment": "Bearish",
-    "topCallStrike": 210,
-    "topPutStrike": 210,
-    "totalCallOI": 87881750,
-    "totalPutOI": 62925500,
-    "callOIChange": 3470500,
-    "putOIChange": 437250,
-    "underlyingPrice": null,
-    "expiry": "2026-05-26",
-    "atmCall": {
-      "strike": 210,
-      "premium": 10.92,
-      "iv": null,
-      "openInterest": 115500,
-      "volume": 7
+    {
+      "symbol": "TATASTEEL",
+      "asset_type": "FnO",
+      "score": 13,
+      "reasons": [
+        "📉 PCR 0.72 — Bearish bias",
+        "Call OI building — resistance at ₹210"
+      ],
+      "signal_reason": "📉 PCR 0.72 — Bearish bias | Call OI building — resistance at ₹210",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.72,
+      "sentiment": "Bearish",
+      "topCallStrike": 210,
+      "topPutStrike": 210,
+      "totalCallOI": 87881750,
+      "totalPutOI": 62925500,
+      "callOIChange": 3470500,
+      "putOIChange": 437250,
+      "underlyingPrice": null,
+      "expiry": "2026-05-26",
+      "atmCall": {
+        "strike": 210,
+        "premium": 10.92,
+        "iv": null,
+        "openInterest": 115500,
+        "volume": 7
+      },
+      "atmPut": {
+        "strike": 210,
+        "premium": 11.24,
+        "iv": null,
+        "openInterest": 0,
+        "volume": 0
+      }
     },
-    "atmPut": {
-      "strike": 210,
-      "premium": 11.24,
-      "iv": null,
-      "openInterest": 0,
-      "volume": 0
-    }
-  },
-  {
-    "symbol": "TCS",
-    "asset_type": "FnO",
-    "score": 13,
-    "reasons": [
-      "📉 PCR 0.61 — Bearish bias",
-      "Call OI building — resistance at ₹2500"
-    ],
-    "signal_reason": "📉 PCR 0.61 — Bearish bias | Call OI building — resistance at ₹2500",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.61,
-    "sentiment": "Bearish",
-    "topCallStrike": 2500,
-    "topPutStrike": 2400,
-    "totalCallOI": 16550875,
-    "totalPutOI": 10083775,
-    "callOIChange": 1168900,
-    "putOIChange": 283600,
-    "underlyingPrice": null,
-    "expiry": "2026-06-30",
-    "atmCall": {
-      "strike": 2440,
-      "premium": 156.15,
-      "iv": null,
-      "openInterest": 0,
-      "volume": 0
+    {
+      "symbol": "TCS",
+      "asset_type": "FnO",
+      "score": 13,
+      "reasons": [
+        "📉 PCR 0.61 — Bearish bias",
+        "Call OI building — resistance at ₹2500"
+      ],
+      "signal_reason": "📉 PCR 0.61 — Bearish bias | Call OI building — resistance at ₹2500",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.61,
+      "sentiment": "Bearish",
+      "topCallStrike": 2500,
+      "topPutStrike": 2400,
+      "totalCallOI": 16550875,
+      "totalPutOI": 10083775,
+      "callOIChange": 1168900,
+      "putOIChange": 283600,
+      "underlyingPrice": null,
+      "expiry": "2026-06-30",
+      "atmCall": {
+        "strike": 2440,
+        "premium": 156.15,
+        "iv": null,
+        "openInterest": 0,
+        "volume": 0
+      },
+      "atmPut": {
+        "strike": 2440,
+        "premium": 99.2,
+        "iv": null,
+        "openInterest": 175,
+        "volume": 0
+      }
     },
-    "atmPut": {
-      "strike": 2440,
-      "premium": 99.2,
-      "iv": null,
-      "openInterest": 175,
-      "volume": 0
-    }
-  },
-  {
-    "symbol": "AXISBANK",
-    "asset_type": "FnO",
-    "score": 13,
-    "reasons": [
-      "📉 PCR 0.67 — Bearish bias",
-      "Call OI building — resistance at ₹1300"
-    ],
-    "signal_reason": "📉 PCR 0.67 — Bearish bias | Call OI building — resistance at ₹1300",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.67,
-    "sentiment": "Bearish",
-    "topCallStrike": 1300,
-    "topPutStrike": 1200,
-    "totalCallOI": 17484375,
-    "totalPutOI": 11776250,
-    "callOIChange": 1097500,
-    "putOIChange": 506875,
-    "underlyingPrice": null,
-    "expiry": "2026-05-26",
-    "atmCall": {
-      "strike": 1250,
-      "premium": 42.35,
-      "iv": null,
-      "openInterest": 410000,
-      "volume": 472
+    {
+      "symbol": "AXISBANK",
+      "asset_type": "FnO",
+      "score": 13,
+      "reasons": [
+        "📉 PCR 0.67 — Bearish bias",
+        "Call OI building — resistance at ₹1300"
+      ],
+      "signal_reason": "📉 PCR 0.67 — Bearish bias | Call OI building — resistance at ₹1300",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.67,
+      "sentiment": "Bearish",
+      "topCallStrike": 1300,
+      "topPutStrike": 1200,
+      "totalCallOI": 17484375,
+      "totalPutOI": 11776250,
+      "callOIChange": 1097500,
+      "putOIChange": 506875,
+      "underlyingPrice": null,
+      "expiry": "2026-05-26",
+      "atmCall": {
+        "strike": 1250,
+        "premium": 42.35,
+        "iv": null,
+        "openInterest": 410000,
+        "volume": 472
+      },
+      "atmPut": {
+        "strike": 1250,
+        "premium": 17.3,
+        "iv": null,
+        "openInterest": 626875,
+        "volume": 1702
+      }
     },
-    "atmPut": {
-      "strike": 1250,
-      "premium": 17.3,
-      "iv": null,
-      "openInterest": 626875,
-      "volume": 1702
-    }
-  },
-  {
-    "symbol": "KOTAKBANK",
-    "asset_type": "FnO",
-    "score": 13,
-    "reasons": [
-      "📉 PCR 0.61 — Bearish bias",
-      "Put OI building — support at ₹360"
-    ],
-    "signal_reason": "📉 PCR 0.61 — Bearish bias | Put OI building — support at ₹360",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.61,
-    "sentiment": "Bearish",
-    "topCallStrike": 400,
-    "topPutStrike": 360,
-    "totalCallOI": 46340000,
-    "totalPutOI": 28346000,
-    "callOIChange": -1172000,
-    "putOIChange": 240000,
-    "underlyingPrice": null,
-    "expiry": "2026-05-26",
-    "atmCall": {
-      "strike": 380,
-      "premium": 8.9,
-      "iv": null,
-      "openInterest": 4612000,
-      "volume": 4066
+    {
+      "symbol": "KOTAKBANK",
+      "asset_type": "FnO",
+      "score": 13,
+      "reasons": [
+        "📉 PCR 0.61 — Bearish bias",
+        "Put OI building — support at ₹360"
+      ],
+      "signal_reason": "📉 PCR 0.61 — Bearish bias | Put OI building — support at ₹360",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.61,
+      "sentiment": "Bearish",
+      "topCallStrike": 400,
+      "topPutStrike": 360,
+      "totalCallOI": 46340000,
+      "totalPutOI": 28346000,
+      "callOIChange": -1172000,
+      "putOIChange": 240000,
+      "underlyingPrice": null,
+      "expiry": "2026-05-26",
+      "atmCall": {
+        "strike": 380,
+        "premium": 8.9,
+        "iv": null,
+        "openInterest": 4612000,
+        "volume": 4066
+      },
+      "atmPut": {
+        "strike": 380,
+        "premium": 10.55,
+        "iv": null,
+        "openInterest": 62000,
+        "volume": 2
+      }
     },
-    "atmPut": {
-      "strike": 380,
-      "premium": 10.55,
-      "iv": null,
-      "openInterest": 62000,
-      "volume": 2
-    }
-  },
-  {
-    "symbol": "RELIANCE",
-    "asset_type": "FnO",
-    "score": 13,
-    "reasons": [
-      "📉 PCR 0.67 — Bearish bias",
-      "Call OI building — resistance at ₹1500"
-    ],
-    "signal_reason": "📉 PCR 0.67 — Bearish bias | Call OI building — resistance at ₹1500",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.67,
-    "sentiment": "Bearish",
-    "topCallStrike": 1500,
-    "topPutStrike": 1300,
-    "totalCallOI": 51807000,
-    "totalPutOI": 34756000,
-    "callOIChange": 2561000,
-    "putOIChange": 117500,
-    "underlyingPrice": null,
-    "expiry": "2026-07-28",
-    "atmCall": {
-      "strike": 1400,
-      "premium": 52.2,
-      "iv": null,
-      "openInterest": 2277000,
-      "volume": 2612
+    {
+      "symbol": "RELIANCE",
+      "asset_type": "FnO",
+      "score": 13,
+      "reasons": [
+        "📉 PCR 0.67 — Bearish bias",
+        "Call OI building — resistance at ₹1500"
+      ],
+      "signal_reason": "📉 PCR 0.67 — Bearish bias | Call OI building — resistance at ₹1500",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.67,
+      "sentiment": "Bearish",
+      "topCallStrike": 1500,
+      "topPutStrike": 1300,
+      "totalCallOI": 51807000,
+      "totalPutOI": 34756000,
+      "callOIChange": 2561000,
+      "putOIChange": 117500,
+      "underlyingPrice": null,
+      "expiry": "2026-07-28",
+      "atmCall": {
+        "strike": 1400,
+        "premium": 52.2,
+        "iv": null,
+        "openInterest": 2277000,
+        "volume": 2612
+      },
+      "atmPut": {
+        "strike": 1400,
+        "premium": 10.1,
+        "iv": null,
+        "openInterest": 1991000,
+        "volume": 8763
+      }
     },
-    "atmPut": {
-      "strike": 1400,
-      "premium": 10.1,
-      "iv": null,
-      "openInterest": 1991000,
-      "volume": 8763
-    }
-  },
-  {
-    "symbol": "JSWSTEEL",
-    "asset_type": "FnO",
-    "score": 13,
-    "reasons": [
-      "📉 PCR 0.67 — Bearish bias",
-      "Call OI building — resistance at ₹1300"
-    ],
-    "signal_reason": "📉 PCR 0.67 — Bearish bias | Call OI building — resistance at ₹1300",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.67,
-    "sentiment": "Bearish",
-    "topCallStrike": 1300,
-    "topPutStrike": 1240,
-    "totalCallOI": 4676400,
-    "totalPutOI": 3142125,
-    "callOIChange": 97875,
-    "putOIChange": -83025,
-    "underlyingPrice": null,
-    "expiry": "2026-06-30",
-    "atmCall": {
-      "strike": 1270,
-      "premium": 38.15,
-      "iv": null,
-      "openInterest": 207225,
-      "volume": 297
+    {
+      "symbol": "JSWSTEEL",
+      "asset_type": "FnO",
+      "score": 13,
+      "reasons": [
+        "📉 PCR 0.67 — Bearish bias",
+        "Call OI building — resistance at ₹1300"
+      ],
+      "signal_reason": "📉 PCR 0.67 — Bearish bias | Call OI building — resistance at ₹1300",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.67,
+      "sentiment": "Bearish",
+      "topCallStrike": 1300,
+      "topPutStrike": 1240,
+      "totalCallOI": 4676400,
+      "totalPutOI": 3142125,
+      "callOIChange": 97875,
+      "putOIChange": -83025,
+      "underlyingPrice": null,
+      "expiry": "2026-06-30",
+      "atmCall": {
+        "strike": 1270,
+        "premium": 38.15,
+        "iv": null,
+        "openInterest": 207225,
+        "volume": 297
+      },
+      "atmPut": {
+        "strike": 1270,
+        "premium": 55.1,
+        "iv": null,
+        "openInterest": 0,
+        "volume": 0
+      }
     },
-    "atmPut": {
-      "strike": 1270,
-      "premium": 55.1,
-      "iv": null,
-      "openInterest": 0,
-      "volume": 0
-    }
-  },
-  {
-    "symbol": "SUNPHARMA",
-    "asset_type": "FnO",
-    "score": 13,
-    "reasons": [
-      "📉 PCR 0.68 — Bearish bias",
-      "Call OI building — resistance at ₹1860"
-    ],
-    "signal_reason": "📉 PCR 0.68 — Bearish bias | Call OI building — resistance at ₹1860",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.68,
-    "sentiment": "Bearish",
-    "topCallStrike": 1860,
-    "topPutStrike": 1800,
-    "totalCallOI": 10875550,
-    "totalPutOI": 7407050,
-    "callOIChange": 509950,
-    "putOIChange": 393400,
-    "underlyingPrice": null,
-    "expiry": "2026-06-30",
-    "atmCall": {
-      "strike": 1820,
-      "premium": 51.8,
-      "iv": null,
-      "openInterest": 1111950,
-      "volume": 1510
+    {
+      "symbol": "SUNPHARMA",
+      "asset_type": "FnO",
+      "score": 13,
+      "reasons": [
+        "📉 PCR 0.68 — Bearish bias",
+        "Call OI building — resistance at ₹1860"
+      ],
+      "signal_reason": "📉 PCR 0.68 — Bearish bias | Call OI building — resistance at ₹1860",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.68,
+      "sentiment": "Bearish",
+      "topCallStrike": 1860,
+      "topPutStrike": 1800,
+      "totalCallOI": 10875550,
+      "totalPutOI": 7407050,
+      "callOIChange": 509950,
+      "putOIChange": 393400,
+      "underlyingPrice": null,
+      "expiry": "2026-06-30",
+      "atmCall": {
+        "strike": 1820,
+        "premium": 51.8,
+        "iv": null,
+        "openInterest": 1111950,
+        "volume": 1510
+      },
+      "atmPut": {
+        "strike": 1820,
+        "premium": 22.8,
+        "iv": null,
+        "openInterest": 594650,
+        "volume": 1623
+      }
     },
-    "atmPut": {
-      "strike": 1820,
-      "premium": 22.8,
-      "iv": null,
-      "openInterest": 594650,
-      "volume": 1623
+    {
+      "symbol": "BAJFINANCE",
+      "asset_type": "FnO",
+      "score": 13,
+      "reasons": [
+        "📉 PCR 0.8 — Bearish bias",
+        "Call OI building — resistance at ₹1000"
+      ],
+      "signal_reason": "📉 PCR 0.8 — Bearish bias | Call OI building — resistance at ₹1000",
+      "price": null,
+      "volume_spike": null,
+      "deal_qty": 0,
+      "deal_value": 0,
+      "source_url": "https://www.nseindia.com/all-reports-derivatives",
+      "pcr": 0.8,
+      "sentiment": "Bearish",
+      "topCallStrike": 1000,
+      "topPutStrike": 900,
+      "totalCallOI": 17553750,
+      "totalPutOI": 14021250,
+      "callOIChange": 996000,
+      "putOIChange": 320250,
+      "underlyingPrice": null,
+      "expiry": "2026-05-26",
+      "atmCall": {
+        "strike": 950,
+        "premium": 30.75,
+        "iv": null,
+        "openInterest": 1055250,
+        "volume": 1657
+      },
+      "atmPut": {
+        "strike": 950,
+        "premium": 33.2,
+        "iv": null,
+        "openInterest": 228750,
+        "volume": 97
+      }
     }
-  },
-  {
-    "symbol": "BAJFINANCE",
-    "asset_type": "FnO",
-    "score": 13,
-    "reasons": [
-      "📉 PCR 0.8 — Bearish bias",
-      "Call OI building — resistance at ₹1000"
-    ],
-    "signal_reason": "📉 PCR 0.8 — Bearish bias | Call OI building — resistance at ₹1000",
-    "price": null,
-    "volume_spike": null,
-    "deal_qty": 0,
-    "deal_value": 0,
-    "source_url": "https://www.nseindia.com/all-reports-derivatives",
-    "pcr": 0.8,
-    "sentiment": "Bearish",
-    "topCallStrike": 1000,
-    "topPutStrike": 900,
-    "totalCallOI": 17553750,
-    "totalPutOI": 14021250,
-    "callOIChange": 996000,
-    "putOIChange": 320250,
-    "underlyingPrice": null,
-    "expiry": "2026-05-26",
-    "atmCall": {
-      "strike": 950,
-      "premium": 30.75,
-      "iv": null,
-      "openInterest": 1055250,
-      "volume": 1657
-    },
-    "atmPut": {
-      "strike": 950,
-      "premium": 33.2,
-      "iv": null,
-      "openInterest": 228750,
-      "volume": 97
-    }
-  }
-]
+  ],
+  "generatedAt": "2026-05-11T05:42:57.719Z",
+  "count": 17
+}
