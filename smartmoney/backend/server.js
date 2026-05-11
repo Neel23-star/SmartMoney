@@ -732,9 +732,38 @@ function toYmd(epochSeconds) {
   return d.toISOString().slice(0, 10);
 }
 
-async function fetchDividendTimeline(symbol, quote) {
+async function fetchNSEDividendActions(symbol, cookie) {
+  try {
+    const url = `https://www.nseindia.com/api/corporates-corporateActions?symbol=${encodeURIComponent(symbol)}`;
+    const res = await axios.get(url, {
+      timeout: 9000,
+      headers: { ...NSE_HEADERS, Cookie: cookie },
+    });
+    const rows = Array.isArray(res.data) ? res.data : Array.isArray(res.data?.data) ? res.data.data : [];
+    return rows
+      .filter((r) => /dividend/i.test(String(r?.purpose || "")))
+      .map((r) => {
+        const dateText = String(r?.exDate || r?.recordDate || r?.bcStartDate || "").trim();
+        const d = new Date(dateText);
+        const ymd = Number.isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
+        return {
+          date: ymd,
+          amount: null,
+          status: ymd && ymd >= new Date().toISOString().slice(0, 10) ? "upcoming" : "paid",
+          source: "nse_corporate_actions",
+          note: String(r?.purpose || "").trim() || null,
+        };
+      })
+      .filter((r) => r.date);
+  } catch {
+    return [];
+  }
+}
+
+async function fetchDividendTimeline(symbol, quote, cookie = "") {
   const now = new Date();
   const thisYear = now.getUTCFullYear();
+  const todayYmd = now.toISOString().slice(0, 10);
   const rows = [];
 
   try {
@@ -749,17 +778,22 @@ async function fetchDividendTimeline(symbol, quote) {
       const date = toYmd(Number(ev.date));
       if (!date) continue;
       const year = Number(date.slice(0, 4));
-      if (year !== thisYear) continue;
+      const isCurrentYear = year === thisYear;
+      const isUpcoming = date >= todayYmd;
+      if (!isCurrentYear && !isUpcoming) continue;
       rows.push({
         date,
         amount: Number.isFinite(ev.amount) ? round2(ev.amount) : null,
-        status: "paid",
+        status: isUpcoming ? "upcoming" : "paid",
         source: "yahoo_events",
       });
     }
   } catch {
     // Keep response resilient: we still return upcoming ex-date when available.
   }
+
+  const nseRows = await fetchNSEDividendActions(symbol, cookie);
+  rows.push(...nseRows);
 
   const exDividendDate = Number(quote?.exDividendDate);
   const upcomingDate = toYmd(exDividendDate);
@@ -777,15 +811,41 @@ async function fetchDividendTimeline(symbol, quote) {
     const k = `${row.date}|${row.amount ?? "na"}|${row.status}`;
     dedup[k] = row;
   }
+  let out = Object.values(dedup).sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
-  return Object.values(dedup).sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  // If nothing in current-year/upcoming, show the latest paid dividend as fallback.
+  if (out.length === 0) {
+    try {
+      const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}.NS?interval=1d&range=5y&events=div`;
+      const res = await axios.get(url, {
+        timeout: 8000,
+        headers: { "User-Agent": "Mozilla/5.0", Accept: "application/json" },
+      });
+      const events = res.data?.chart?.result?.[0]?.events?.dividends || {};
+      const all = Object.keys(events).map((k) => {
+        const ev = events[k] || {};
+        const date = toYmd(Number(ev.date));
+        return {
+          date,
+          amount: Number.isFinite(ev.amount) ? round2(ev.amount) : null,
+          status: "paid",
+          source: "yahoo_events",
+        };
+      }).filter((r) => r.date).sort((a, b) => String(b.date).localeCompare(String(a.date)));
+      if (all.length > 0) out = [all[0]];
+    } catch {
+      // no-op
+    }
+  }
+
+  return out;
 }
 
-async function fetchDividendTimelines(symbols, quoteMetrics = {}) {
+async function fetchDividendTimelines(symbols, quoteMetrics = {}, cookie = "") {
   const out = {};
   if (!Array.isArray(symbols) || symbols.length === 0) return out;
   for (const sym of symbols) {
-    out[sym] = await fetchDividendTimeline(sym, quoteMetrics[sym]);
+    out[sym] = await fetchDividendTimeline(sym, quoteMetrics[sym], cookie);
   }
   return out;
 }
@@ -1049,7 +1109,8 @@ async function buildSingleStockSignal(symbolInput) {
     }
   }
 
-  signal.dividends = await fetchDividendTimeline(symbol, q);
+  const dividendQuote = yahooQuoteMap[symbol] || q;
+  signal.dividends = await fetchDividendTimeline(symbol, dividendQuote, cookie);
 
   signal.explanation = generateExplanation(signal);
   signal.interestHighlights = buildInterestHighlights(signal);
@@ -1161,7 +1222,7 @@ async function buildSignals() {
     .sort((a, b) => b.score - a.score)
     .slice(0, 25);
 
-  const dividendMap = await fetchDividendTimelines(ranked.map((s) => s.symbol), yahooQuoteMetrics);
+  const dividendMap = await fetchDividendTimelines(ranked.map((s) => s.symbol), yahooQuoteMetrics, cookie);
   for (const row of ranked) {
     row.dividends = dividendMap[row.symbol] || [];
   }
