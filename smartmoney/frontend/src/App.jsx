@@ -14,7 +14,6 @@ import MutualFundsPage from "./components/MutualFundsPage";
 import SearchPage from "./components/SearchPage";
 import BottomNav from "./components/BottomNav";
 import EducationPanel from "./components/EducationPanel";
-import IndexBar from "./components/IndexBar";
 
 const TABS = [
   { id: "home",        label: "🏠 Home" },
@@ -330,6 +329,16 @@ export default function App() {
         <main className="max-w-5xl mx-auto px-4 py-6">
           {error && (
             <div className="bg-red-900/40 border border-red-500 rounded-xl p-4 mb-4 text-red-300">⚠️ {error}</div>
+          )}
+
+          {page === "stocks" && stockFilter !== "ETF" && (
+            <div className="mb-4 rounded-xl border border-sky-500/30 bg-sky-900/20 p-3">
+              <p className="text-sm text-sky-200 font-semibold mb-1">Purpose Of This Stocks Section</p>
+              <p className="text-xs text-slate-200 leading-relaxed">
+                This section highlights the top 25 stocks where unusual participation is visible through bulk/block deal intensity and live volume behavior.
+                Use it to quickly spot where smart money activity is concentrated, then validate with price action and risk rules before any decision.
+              </p>
+            </div>
           )}
 
           {/* Sector filter pills — only for stocks */}

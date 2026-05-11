@@ -231,6 +231,20 @@ export default function SignalDetail({ signal, onClose }) {
           )}
         </div>
 
+        {!isFnO && Array.isArray(signal.dividends) && signal.dividends.length > 0 && (
+          <div className="bg-cyan-900/15 border border-cyan-500/30 rounded-xl p-4 mb-4">
+            <p className="text-xs text-cyan-300 uppercase tracking-wider mb-2">Dividend Timeline (current year)</p>
+            <div className="flex flex-wrap gap-2">
+              {signal.dividends.map((d, idx) => (
+                <span key={`${d.date}-${d.status}-${idx}`} className="text-[11px] px-2 py-1 rounded-full border border-cyan-500/30 text-cyan-100 bg-slate-900/60">
+                  {d.status === "upcoming" ? "Upcoming" : "Paid"}: {d.date}
+                  {d.amount == null ? "" : ` · ₹${Number(d.amount).toLocaleString("en-IN")}`}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Last updated */}
         {signal.fetched_at && (
           <p className="text-xs text-slate-500 mb-4">

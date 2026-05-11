@@ -43,6 +43,7 @@ export default function SearchPage() {
   };
 
   const stock = result?.stock;
+  const dividends = Array.isArray(stock?.dividends) ? stock.dividends : [];
 
   return (
     <main className="max-w-5xl mx-auto px-4 py-6">
@@ -134,6 +135,20 @@ export default function SearchPage() {
                 </p>
               </div>
             </div>
+
+            {dividends.length > 0 && (
+              <div className="mt-4 rounded-lg border border-cyan-500/30 bg-cyan-900/15 p-3">
+                <p className="text-xs text-cyan-200 font-medium mb-2">Dividend Timeline (current year)</p>
+                <div className="flex flex-wrap gap-2">
+                  {dividends.map((d, idx) => (
+                    <span key={`${d.date}-${d.status}-${idx}`} className="text-[11px] px-2 py-1 rounded-full border border-cyan-500/30 text-cyan-100 bg-slate-900/60">
+                      {d.status === "upcoming" ? "Upcoming" : "Paid"}: {d.date}
+                      {d.amount == null ? "" : ` · ₹${Number(d.amount).toLocaleString("en-IN")}`}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

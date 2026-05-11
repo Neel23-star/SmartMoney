@@ -15,6 +15,7 @@ const SCORE_COLOR = (score) => {
 
 export default function SignalCard({ signal, onClick }) {
   const typeStyle = TYPE_COLORS[signal.asset_type] || TYPE_COLORS.Stock;
+  const dividends = Array.isArray(signal.dividends) ? signal.dividends : [];
 
   return (
     <button
@@ -70,6 +71,20 @@ export default function SignalCard({ signal, onClick }) {
         <p className="text-xs text-slate-400 italic mb-3 border-l-2 border-emerald-600/50 pl-2">
           {signal.explanation}
         </p>
+      )}
+
+      {signal.asset_type === "Stock" && dividends.length > 0 && (
+        <div className="mb-3 rounded-lg border border-cyan-500/30 bg-cyan-900/15 p-2">
+          <p className="text-[11px] text-cyan-300 mb-1.5 font-medium">Dividend</p>
+          <div className="flex flex-wrap gap-1.5">
+            {dividends.map((d, idx) => (
+              <span key={`${d.date}-${d.status}-${idx}`} className="text-[10px] px-2 py-0.5 rounded-full border border-cyan-500/30 text-cyan-100 bg-slate-900/60">
+                {d.status === "upcoming" ? "Upcoming" : "Paid"}: {d.date}
+                {d.amount == null ? "" : ` · ₹${Number(d.amount).toLocaleString("en-IN")}`}
+              </span>
+            ))}
+          </div>
+        </div>
       )}
 
       <div className="flex items-center justify-between text-xs text-slate-500">

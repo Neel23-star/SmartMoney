@@ -725,6 +725,71 @@ async function fetchStockQuoteMetrics(symbols) {
   return out;
 }
 
+function toYmd(epochSeconds) {
+  if (!Number.isFinite(epochSeconds)) return null;
+  const d = new Date(epochSeconds * 1000);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toISOString().slice(0, 10);
+}
+
+async function fetchDividendTimeline(symbol, quote) {
+  const now = new Date();
+  const thisYear = now.getUTCFullYear();
+  const rows = [];
+
+  try {
+    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}.NS?interval=1d&range=2y&events=div`;
+    const res = await axios.get(url, {
+      timeout: 8000,
+      headers: { "User-Agent": "Mozilla/5.0", Accept: "application/json" },
+    });
+    const events = res.data?.chart?.result?.[0]?.events?.dividends || {};
+    for (const key of Object.keys(events)) {
+      const ev = events[key] || {};
+      const date = toYmd(Number(ev.date));
+      if (!date) continue;
+      const year = Number(date.slice(0, 4));
+      if (year !== thisYear) continue;
+      rows.push({
+        date,
+        amount: Number.isFinite(ev.amount) ? round2(ev.amount) : null,
+        status: "paid",
+        source: "yahoo_events",
+      });
+    }
+  } catch {
+    // Keep response resilient: we still return upcoming ex-date when available.
+  }
+
+  const exDividendDate = Number(quote?.exDividendDate);
+  const upcomingDate = toYmd(exDividendDate);
+  if (upcomingDate && upcomingDate >= now.toISOString().slice(0, 10)) {
+    rows.push({
+      date: upcomingDate,
+      amount: null,
+      status: "upcoming",
+      source: "quote_ex_dividend_date",
+    });
+  }
+
+  const dedup = {};
+  for (const row of rows) {
+    const k = `${row.date}|${row.amount ?? "na"}|${row.status}`;
+    dedup[k] = row;
+  }
+
+  return Object.values(dedup).sort((a, b) => String(b.date).localeCompare(String(a.date)));
+}
+
+async function fetchDividendTimelines(symbols, quoteMetrics = {}) {
+  const out = {};
+  if (!Array.isArray(symbols) || symbols.length === 0) return out;
+  for (const sym of symbols) {
+    out[sym] = await fetchDividendTimeline(sym, quoteMetrics[sym]);
+  }
+  return out;
+}
+
 function optionRankScore(contract) {
   const oi = Math.max(Number(contract?.openInterest) || 0, 0);
   const chg = Math.max(Number(contract?.changeInOI) || 0, 0);
@@ -953,6 +1018,39 @@ async function buildSingleStockSignal(symbolInput) {
     interestLevel: deriveInterestLevel(totalScore),
   };
 
+  const noLiveSnapshot = (
+    !Number.isFinite(signal.openPrice) &&
+    !Number.isFinite(signal.dayHigh) &&
+    !Number.isFinite(signal.dayLow) &&
+    !Number.isFinite(signal.closePrice) &&
+    !Number.isFinite(signal.prevClose) &&
+    !Number.isFinite(signal.week52High) &&
+    !Number.isFinite(signal.week52Low)
+  );
+
+  if (noLiveSnapshot) {
+    const cached = readSignals().find((s) => normalizeEquitySymbol(s.symbol) === symbol);
+    if (cached) {
+      signal.openPrice = Number.isFinite(signal.openPrice) ? signal.openPrice : (Number.isFinite(cached.openPrice) ? cached.openPrice : null);
+      signal.dayHigh = Number.isFinite(signal.dayHigh) ? signal.dayHigh : (Number.isFinite(cached.dayHigh) ? cached.dayHigh : null);
+      signal.dayLow = Number.isFinite(signal.dayLow) ? signal.dayLow : (Number.isFinite(cached.dayLow) ? cached.dayLow : null);
+      signal.closePrice = Number.isFinite(signal.closePrice) ? signal.closePrice : (Number.isFinite(cached.closePrice) ? cached.closePrice : null);
+      signal.prevClose = Number.isFinite(signal.prevClose) ? signal.prevClose : (Number.isFinite(cached.prevClose) ? cached.prevClose : null);
+      signal.week52High = Number.isFinite(signal.week52High) ? signal.week52High : (Number.isFinite(cached.week52High) ? cached.week52High : null);
+      signal.week52Low = Number.isFinite(signal.week52Low) ? signal.week52Low : (Number.isFinite(cached.week52Low) ? cached.week52Low : null);
+      signal.volume_spike = Number.isFinite(signal.volume_spike) ? signal.volume_spike : (Number.isFinite(cached.volume_spike) ? cached.volume_spike : null);
+      if (signal.score === 0 && Number.isFinite(cached.score)) {
+        signal.score = cached.score;
+        signal.scoreBreakdown.totalScore = cached.score;
+      }
+      if (signal.signal_reason === "Tracking" && cached.signal_reason) {
+        signal.signal_reason = `${cached.signal_reason} | Cache fallback`;
+      }
+    }
+  }
+
+  signal.dividends = await fetchDividendTimeline(symbol, q);
+
   signal.explanation = generateExplanation(signal);
   signal.interestHighlights = buildInterestHighlights(signal);
   return signal;
@@ -1062,6 +1160,11 @@ async function buildSignals() {
     })
     .sort((a, b) => b.score - a.score)
     .slice(0, 25);
+
+  const dividendMap = await fetchDividendTimelines(ranked.map((s) => s.symbol), yahooQuoteMetrics);
+  for (const row of ranked) {
+    row.dividends = dividendMap[row.symbol] || [];
+  }
 
   writeSignals(ranked);
   console.log(`✅ Saved ${ranked.length} signals`);
