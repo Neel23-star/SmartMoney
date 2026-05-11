@@ -1007,6 +1007,47 @@ function buildInterestHighlights(signal) {
   return highlights;
 }
 
+function buildQuoteFallbackSignals(quoteMap = {}) {
+  return Object.values(quoteMap)
+    .filter((q) => q?.symbol)
+    .map((q) => {
+      const changePct = Number(q?.regularMarketChangePercent || 0);
+      const absChangePct = Math.abs(changePct);
+      const score = round2(Math.min(12, absChangePct * 2 + 1));
+      const signal = {
+        symbol: q.symbol,
+        asset_type: "Stock",
+        score,
+        signal_reason: Number.isFinite(changePct)
+          ? `NSE live quote fallback | Move ${round2(changePct)}%`
+          : "NSE live quote fallback",
+        sectors: getSectors(q.symbol),
+        volume_spike: null,
+        deal_qty: 0,
+        deal_value: 0,
+        source_url: `https://www.nseindia.com/get-quotes/equity?symbol=${encodeURIComponent(q.symbol)}`,
+        openPrice: Number.isFinite(q?.regularMarketOpen) ? round2(q.regularMarketOpen) : null,
+        dayHigh: Number.isFinite(q?.regularMarketDayHigh) ? round2(q.regularMarketDayHigh) : null,
+        dayLow: Number.isFinite(q?.regularMarketDayLow) ? round2(q.regularMarketDayLow) : null,
+        closePrice: Number.isFinite(q?.regularMarketPrice) ? round2(q.regularMarketPrice) : null,
+        prevClose: Number.isFinite(q?.regularMarketPreviousClose) ? round2(q.regularMarketPreviousClose) : null,
+        week52High: Number.isFinite(q?.fiftyTwoWeekHigh) ? round2(q.fiftyTwoWeekHigh) : null,
+        week52Low: Number.isFinite(q?.fiftyTwoWeekLow) ? round2(q.fiftyTwoWeekLow) : null,
+        scoreBreakdown: {
+          dealScore: 0,
+          volumeScore: round2(score),
+          totalScore: round2(score),
+        },
+        interestLevel: deriveInterestLevel(score),
+      };
+      signal.explanation = generateExplanation(signal);
+      signal.interestHighlights = buildInterestHighlights(signal);
+      return signal;
+    })
+    .sort((a, b) => (b.score || 0) - (a.score || 0))
+    .slice(0, 25);
+}
+
 async function buildSingleStockSignal(symbolInput) {
   const symbol = normalizeEquitySymbol(symbolInput);
   if (!symbol) {
@@ -1214,6 +1255,24 @@ async function buildSignals() {
     fetchNSEEquityQuotes(symbols, cookie),
     fetchStockQuoteMetrics(symbols),
   ]);
+
+  if (symbols.length === 0) {
+    const fallbackQuotes = await fetchNSEEquityQuotes(NIFTY50, cookie, {
+      batchSize: 10,
+      timeoutMs: 4000,
+      interBatchDelayMs: 60,
+    });
+    const fallbackRanked = buildQuoteFallbackSignals(fallbackQuotes);
+    const dividendMap = await fetchDividendTimelines(fallbackRanked.map((s) => s.symbol), {}, cookie);
+    for (const row of fallbackRanked) {
+      row.dividends = dividendMap[row.symbol] || [];
+    }
+    if (fallbackRanked.length > 0) {
+      writeSignals(fallbackRanked);
+      console.log(`✅ Saved ${fallbackRanked.length} fallback signals from NSE quotes`);
+      return fallbackRanked;
+    }
+  }
 
   // Sort and take top 25, tag with sectors
   const ranked = Object.values(signals)
