@@ -1057,25 +1057,27 @@ function buildInterestHighlights(signal) {
   return highlights;
 }
 
-function buildQuoteFallbackSignals(quoteMap = {}) {
+function buildQuoteFallbackSignals(quoteMap = {}, sourceLabel = "Quote fallback") {
   return Object.values(quoteMap)
     .filter((q) => q?.symbol)
     .map((q) => {
+      const symbol = normalizeEquitySymbol(q.symbol);
+      if (!symbol) return null;
       const changePct = Number(q?.regularMarketChangePercent || 0);
       const absChangePct = Math.abs(changePct);
       const score = round2(Math.min(12, absChangePct * 2 + 1));
       const signal = {
-        symbol: q.symbol,
+        symbol,
         asset_type: "Stock",
         score,
         signal_reason: Number.isFinite(changePct)
-          ? `NSE live quote fallback | Move ${round2(changePct)}%`
-          : "NSE live quote fallback",
-        sectors: getSectors(q.symbol),
+          ? `${sourceLabel} | Move ${round2(changePct)}%`
+          : sourceLabel,
+        sectors: getSectors(symbol),
         volume_spike: null,
         deal_qty: 0,
         deal_value: 0,
-        source_url: `https://www.nseindia.com/get-quotes/equity?symbol=${encodeURIComponent(q.symbol)}`,
+        source_url: q.source_url || `https://www.nseindia.com/get-quotes/equity?symbol=${encodeURIComponent(symbol)}`,
         openPrice: Number.isFinite(q?.regularMarketOpen) ? round2(q.regularMarketOpen) : null,
         dayHigh: Number.isFinite(q?.regularMarketDayHigh) ? round2(q.regularMarketDayHigh) : null,
         dayLow: Number.isFinite(q?.regularMarketDayLow) ? round2(q.regularMarketDayLow) : null,
@@ -1094,8 +1096,75 @@ function buildQuoteFallbackSignals(quoteMap = {}) {
       signal.interestHighlights = buildInterestHighlights(signal);
       return signal;
     })
+    .filter(Boolean)
     .sort((a, b) => (b.score || 0) - (a.score || 0))
     .slice(0, 25);
+}
+
+function buildOptionsQuoteFallback(quoteMap = {}) {
+  const rows = Object.values(quoteMap)
+    .filter((q) => q?.symbol && Number.isFinite(q?.regularMarketPrice))
+    .map((q) => {
+      const symbol = normalizeEquitySymbol(q.symbol);
+      if (!symbol) return null;
+      const price = Number(q.regularMarketPrice);
+      const changePct = Number(q.regularMarketChangePercent || 0);
+      const step = price >= 5000 ? 100 : price >= 1000 ? 50 : price >= 200 ? 20 : 10;
+      const atmStrike = Math.round(price / step) * step;
+      const topCallStrike = atmStrike + step;
+      const topPutStrike = Math.max(step, atmStrike - step);
+      const pcr = changePct >= 1 ? 1.22 : changePct <= -1 ? 0.78 : 1;
+      const sentiment = deriveSentiment(pcr);
+      const oiBase = Math.max(50000, Math.round(Number(q.regularMarketVolume || 0) * 0.08));
+      const premiumBase = Math.max(step * 0.35, price * 0.012);
+      const reasons = [
+        "Yahoo underlying fallback — live option chain unavailable",
+        Number.isFinite(changePct)
+          ? `Underlying move ${round2(changePct)}% with synthetic ATM levels`
+          : "Synthetic ATM levels built from underlying snapshot",
+      ];
+
+      return {
+        symbol,
+        asset_type: "FnO",
+        score: round2(Math.min(18, Math.abs(changePct) * 3 + 4)),
+        reasons,
+        signal_reason: reasons.join(" | "),
+        price: null,
+        volume_spike: null,
+        deal_qty: 0,
+        deal_value: 0,
+        source_url: `https://finance.yahoo.com/quote/${encodeURIComponent(`${symbol}.NS`)}`,
+        pcr: round2(pcr),
+        sentiment,
+        topCallStrike,
+        topPutStrike,
+        totalCallOI: oiBase,
+        totalPutOI: oiBase,
+        callOIChange: Math.round(oiBase * (changePct > 0 ? 0.04 : 0.02)),
+        putOIChange: Math.round(oiBase * (changePct < 0 ? 0.04 : 0.02)),
+        underlyingPrice: round2(price),
+        expiry: null,
+        atmCall: {
+          strike: atmStrike,
+          premium: round2(premiumBase),
+          iv: Number.isFinite(q.impliedVolatility) ? round2(q.impliedVolatility) : null,
+          openInterest: oiBase,
+          volume: Number.isFinite(q.regularMarketVolume) ? q.regularMarketVolume : null,
+        },
+        atmPut: {
+          strike: atmStrike,
+          premium: round2(premiumBase * 0.95),
+          iv: Number.isFinite(q.impliedVolatility) ? round2(q.impliedVolatility) : null,
+          openInterest: oiBase,
+          volume: Number.isFinite(q.regularMarketVolume) ? q.regularMarketVolume : null,
+        },
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => (b.score || 0) - (a.score || 0));
+
+  return rows.slice(0, 30);
 }
 
 async function buildSingleStockSignal(symbolInput) {
@@ -1312,7 +1381,11 @@ async function buildSignals() {
       timeoutMs: 4000,
       interBatchDelayMs: 60,
     });
-    const fallbackRanked = buildQuoteFallbackSignals(fallbackQuotes);
+    let fallbackRanked = buildQuoteFallbackSignals(fallbackQuotes, "NSE live quote fallback");
+    if (fallbackRanked.length === 0) {
+      const yahooFallbackQuotes = await fetchStockQuoteMetrics(NIFTY50);
+      fallbackRanked = buildQuoteFallbackSignals(yahooFallbackQuotes, "Yahoo quote fallback");
+    }
     const dividendMap = await fetchDividendTimelines(fallbackRanked.map((s) => s.symbol), {}, cookie);
     for (const row of fallbackRanked) {
       row.dividends = dividendMap[row.symbol] || [];
@@ -1350,6 +1423,20 @@ async function buildSignals() {
   const dividendMap = await fetchDividendTimelines(ranked.map((s) => s.symbol), yahooQuoteMetrics, cookie);
   for (const row of ranked) {
     row.dividends = dividendMap[row.symbol] || [];
+  }
+
+  if (ranked.length === 0) {
+    const yahooFallbackQuotes = await fetchStockQuoteMetrics(NIFTY50);
+    const yahooFallbackRanked = buildQuoteFallbackSignals(yahooFallbackQuotes, "Yahoo quote fallback");
+    if (yahooFallbackRanked.length > 0) {
+      const yahooDividendMap = await fetchDividendTimelines(yahooFallbackRanked.map((s) => s.symbol), yahooFallbackQuotes, cookie);
+      for (const row of yahooFallbackRanked) {
+        row.dividends = yahooDividendMap[row.symbol] || [];
+      }
+      writeSignals(yahooFallbackRanked);
+      console.log(`✅ Saved ${yahooFallbackRanked.length} fallback signals from Yahoo quotes`);
+      return yahooFallbackRanked;
+    }
   }
 
   if (ranked.length === 0 && cachedSignals.length > 0) {
@@ -1692,6 +1779,15 @@ app.get("/api/options", async (req, res) => {
       options = Object.values(optionsToSignals(optionsRaw))
         .sort((a, b) => b.score - a.score)
         .slice(0, 200);
+
+      if (options.length === 0) {
+        const quoteFallback = buildOptionsQuoteFallback(await fetchStockQuoteMetrics(FNO_SYMBOLS.filter((sym) => !["NIFTY", "BANKNIFTY", "FINNIFTY"].includes(sym))));
+        if (quoteFallback.length > 0) {
+          options = quoteFallback;
+          source = "yahoo_underlying_fallback";
+          notes.push("Option chain unavailable; built FnO tracking cards from Yahoo underlying quotes.");
+        }
+      }
 
       topCalls = rankOptionContracts(chains.flatMap((c) => c.calls || []), limit);
       topPuts = rankOptionContracts(chains.flatMap((c) => c.puts || []), limit);
